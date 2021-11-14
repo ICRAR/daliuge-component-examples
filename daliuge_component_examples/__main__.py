@@ -7,7 +7,7 @@ from . import MyApp  # pragma: no cover
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
-    `python -m project_name` and `$ project_name `.
+    `python -m daliuge_component_examples` and `$ daliuge_component_examples `.
 
     This is your program's entry point.
 
@@ -21,15 +21,15 @@ def main() -> None:  # pragma: no cover
         * Run an application (Flask, FastAPI, Django, etc.)
     """
     parser = argparse.ArgumentParser(
-        description="project_name.",
-        epilog="Enjoy the project_name functionality!",
+        description="daliuge_component_examples.",
+        epilog="Enjoy the daliuge_component_examples functionality!",
     )
     # This is required positional argument
     parser.add_argument(
         "name",
         type=str,
         help="The username",
-        default="author_name",
+        default="ICRAR",
     )
     # This is optional named argument
     parser.add_argument(
