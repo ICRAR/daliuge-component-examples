@@ -17,17 +17,6 @@ given = pytest.mark.parametrize
 
 
 class TestMyApps(unittest.TestCase):
-<<<<<<< Updated upstream
-    def test_myApp_class(self):
-        i = NullDROP("i", "i")
-        a = RandomArrayApp("a", "a")
-        a.integer = False
-        a.high = 1
-        m = InMemoryDROP("m", "m")
-        b = MyBranch("b", "b")
-        n = InMemoryDROP("n", "n")
-        y = InMemoryDROP("y", "y")
-=======
     def test_myBranch_class(self):
         """
         Test creates a random array in memory, reads it into the branch and
@@ -46,7 +35,6 @@ class TestMyApps(unittest.TestCase):
         y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
 
         # connect the graph nodes
->>>>>>> Stashed changes
         i.addConsumer(a)
         m.addProducer(a)
         m.addConsumer(b)
@@ -74,11 +62,6 @@ class TestMyApps(unittest.TestCase):
         self.assertEqual(res, mean)
 
     def test_myData_class(self):
-<<<<<<< Updated upstream
-        assert MyDataDROP("a", "a").getIO() == "Hello from MyDataDROP"
-
-    def test_myData_dataURL(self):
-=======
         """
         Dummy getIO method test for data drop
         """
@@ -88,5 +71,4 @@ class TestMyApps(unittest.TestCase):
         """
         Dummy dataURL method test for data drop
         """
->>>>>>> Stashed changes
         assert MyDataDROP("a", "a").dataURL == "Hello from the dataURL method"
