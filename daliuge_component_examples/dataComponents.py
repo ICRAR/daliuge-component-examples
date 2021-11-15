@@ -9,9 +9,9 @@ then result in a single EAGLE palette.
 
 Be creative! do whatever you need to do!
 """
-from dlg.drop import AbstractDROP
-
 import logging
+
+from dlg.drop import AbstractDROP
 
 logger = logging.getLogger(__name__)
 

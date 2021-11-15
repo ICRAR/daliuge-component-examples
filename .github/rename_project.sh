@@ -16,10 +16,10 @@ echo "Description: $description";
 
 echo "Renaming project..."
 
-original_author="ICRAR"
+original_author=""
 original_name="daliuge_component_examples"
 original_urlname="daliuge-component-examples"
-original_description="Awesome daliuge_component_examples created by ICRAR"
+original_description="Awesome daliuge_component_examples created by "
 # for filename in $(find . -name "*.*") 
 for filename in $(git ls-files) 
 do

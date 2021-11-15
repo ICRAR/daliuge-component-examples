@@ -12,11 +12,11 @@ Be creative! do whatever you need to do!
 """
 
 __version__ = "0.1.0"
+import logging
+import pickle
+
 from dlg import droputils
 from dlg.drop import BranchAppDrop
-
-import pickle
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 # just a single input. There is an associated logical graph available on
 # github:
 #
-#    https://github.com/ICRAR/EAGLE-graph-repo/examples/branchDemo.graph
+#    https://github.com//EAGLE-graph-repo/examples/branchDemo.graph
 #
 # The application assumes to receive a random floating point array with values
 # in the range [0,1] on input. It will calculate the mean of that array and

@@ -32,15 +32,17 @@ def read_requirements(path):
 setup(
     name="daliuge_component_examples",
     version=read("daliuge_component_examples", "VERSION"),
-    description="Awesome daliuge_component_examples created by ICRAR",
-    url="https://github.com/ICRAR/daliuge-component-examples/",
+    description="Awesome daliuge_component_examples created by ",
+    url="https://github.com//daliuge-component-examples/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    author="ICRAR",
+    author="andreas.wicenec@icrar.org",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
-        "console_scripts": ["daliuge_component_examples = daliuge_component_examples.__main__:main"]
+        "console_scripts": [
+            "daliuge_component_examples = daliuge_component_examples.__main__:main"
+        ]
     },
     extras_require={"test": read_requirements("requirements-test.txt")},
 )

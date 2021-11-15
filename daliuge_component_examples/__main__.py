@@ -29,7 +29,7 @@ def main() -> None:  # pragma: no cover
         "name",
         type=str,
         help="The username",
-        default="ICRAR",
+        default="",
     )
     # This is optional named argument
     parser.add_argument(
