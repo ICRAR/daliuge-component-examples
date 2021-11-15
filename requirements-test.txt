@@ -9,3 +9,6 @@ codecov
 mypy
 gitchangelog
 mkdocs
+git+git://github.com//daliuge/#egg=daliuge-common&subdirectory=daliuge-common
+git+git://github.com//daliuge/#egg=daliuge-translator&subdirectory=daliuge-translator
+git+git://github.com//daliuge/#egg=daliuge-engine&subdirectory=daliuge-engine
