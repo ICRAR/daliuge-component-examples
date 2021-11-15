@@ -10,7 +10,7 @@ do
 done
 
 if [ -z "${template}" ]; then
-    echo "Available templates: flask"
+    echo "Available templates: component"
     read -p "Enter template name: " template
 fi
 
@@ -32,7 +32,7 @@ function download_template {
 }
 
 echo "Using template:${template}"
-template_url="https://github.com/rochacbruno/${template}-project-template"
+template_url="https://github.com/ICRAR/daliuge-${template}-template"
 template_dir=".github/templates/${template}"
 if [ -d "${template_dir}" ]; then
     # Template directory already exists
