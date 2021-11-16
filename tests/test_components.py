@@ -17,7 +17,6 @@ given = pytest.mark.parametrize
 
 
 class TestMyApps(unittest.TestCase):
-
     def _runBranchTest(self, arrayDROP):
         """
         Execute the actual test given the arrayDROP on input
@@ -54,13 +53,12 @@ class TestMyApps(unittest.TestCase):
         # and check whether it is the same as the calculated one
         return (t.oid, res, mean)
 
-
     def test_myBranch_class(self):
         """
         Test creates two random arrays in memory drops, one with a
         mean below and the other above 0.5. It runs two graphs against
-        each of the arrays drops and checks whether the branch is 
-        traversed on the correct side. It also checks whether the 
+        each of the arrays drops and checks whether the branch is
+        traversed on the correct side. It also checks whether the
         derived values are correct.
         """
         # create and configure the creation of the random array.
@@ -68,7 +66,7 @@ class TestMyApps(unittest.TestCase):
         l.integer = False
         l.high = 0.5
         (oid, resLow, meanLow) = self._runBranchTest(l)
-        self.assertEqual(oid, 'y')
+        self.assertEqual(oid, "y")
         self.assertEqual(resLow, meanLow)
 
         h = RandomArrayApp("h", "h")
@@ -76,9 +74,8 @@ class TestMyApps(unittest.TestCase):
         h.low = 0.5
         h.high = 1
         (oid, resHigh, meanHigh) = self._runBranchTest(h)
-        self.assertEqual(oid, 'n')
+        self.assertEqual(oid, "n")
         self.assertEqual(resHigh, meanHigh)
-
 
     def test_myData_class(self):
         """
