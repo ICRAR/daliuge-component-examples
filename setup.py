@@ -25,7 +25,7 @@ def read_requirements(path):
     return [
         line.strip()
         for line in read(path).split("\n")
-        if not line.startswith(('"', "#", "-", "git+"))
+     #   if not line.startswith(('"', "#", "-", "git+"))
     ]
 
 
@@ -33,7 +33,7 @@ setup(
     name="daliuge_component_examples",
     version=read("daliuge_component_examples", "VERSION"),
     description="Awesome daliuge_component_examples created by ",
-    url="https://github.com//daliuge-component-examples/",
+    url="https://github.com/ICRAR/daliuge-component-examples/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="andreas.wicenec@icrar.org",
