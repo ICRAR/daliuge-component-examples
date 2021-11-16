@@ -32,11 +32,7 @@ function download_template {
 }
 
 echo "Using template:${template}"
-<<<<<<< Updated upstream
 template_url="https://github.com/ICRAR/daliuge-${template}-template"
-=======
-template_url="https://github.com//daliuge-${template}-template"
->>>>>>> Stashed changes
 template_dir=".github/templates/${template}"
 if [ -d "${template_dir}" ]; then
     # Template directory already exists
