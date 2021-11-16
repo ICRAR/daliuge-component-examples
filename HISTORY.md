@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Added 'v' to release tag. [Andreas Wicenec]
+- Release: version 0.1.3 🚀 [Andreas Wicenec]
+
+
 0.1.3 (2021-11-16)
 ------------------
 - PyPi upload does not work with repository flag, try without. [Andreas
