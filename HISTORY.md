@@ -4,6 +4,8 @@ Changelog
 
 (unreleased)
 ------------
+- Added gitchangelog config; commented testpypi upload. [Andreas
+  Wicenec]
 - Fix the sequence for PyPi upload. [Andreas Wicenec]
 
 
