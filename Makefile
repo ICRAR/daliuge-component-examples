@@ -78,13 +78,13 @@ virtualenv:       ## Create a virtual environment.
 release:          ## Create a new tag for release.
 	@echo "WARNING: This operation will create s version tag and push to github"
 	@read -p "Version? (provide the next x.y.z semver) : " TAG
-	@echo "creating git tag : v$${TAG}"
-	@git tag v$${TAG}
 	@echo "v$${TAG}" > daliuge_component_examples/VERSION
 	@$(ENV_PREFIX)gitchangelog > HISTORY.md
 	@git add daliuge_component_examples/VERSION HISTORY.md
 	@git commit -m "release: version v$${TAG} 🚀"
-	@git push -u origin HEAD --tags
+	@echo "creating git tag : v$${TAG}"
+	@git tag v$${TAG}
+	@git push -u origin main --tags
 	@echo "Github Actions will detect the new tag and release the new version."
 
 .PHONY: docs
