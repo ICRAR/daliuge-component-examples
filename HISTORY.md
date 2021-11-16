@@ -4,6 +4,7 @@ Changelog
 
 (unreleased)
 ------------
+- Release: version v0.1.3 🚀 [Andreas Wicenec]
 - Still no luck with PyPi. [Andreas Wicenec]
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
 - Added 'v' to release tag. [Andreas Wicenec]
