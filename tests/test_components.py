@@ -17,30 +17,23 @@ given = pytest.mark.parametrize
 
 
 class TestMyApps(unittest.TestCase):
-    def test_myBranch_class(self):
+
+    def _runBranchTest(self, arrayDROP):
         """
-        Test creates a random array in memory, reads it into the branch and
-        checks whether the mean is < 0.5. Depending whether it is or not,
-        it writes the mean to another memory drop and compares the content
-        with the independently calculated mean of the input array.
+        Execute the actual test given the arrayDROP on input
         """
         i = NullDROP("i", "i")  # just to be able to start the execution
-        # create and configure the creation of the random array.
-        a = RandomArrayApp("a", "a")
-        a.integer = False
-        a.high = 1
         m = InMemoryDROP("m", "m")  # the receiving drop
         b = MyBranch("b", "b")  # the branch drop
         n = InMemoryDROP("n", "n")  # the memory drop for the NO branch
         y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
 
         # connect the graph nodes
-        i.addConsumer(a)
-        m.addProducer(a)
+        i.addConsumer(arrayDROP)
+        m.addProducer(arrayDROP)
         m.addConsumer(b)
         b.addOutput(y)
         b.addOutput(n)
-
         # start the graph
         with droputils.DROPWaiterCtx(self, b, timeout=1):
             i.setCompleted()
@@ -59,7 +52,33 @@ class TestMyApps(unittest.TestCase):
         # load the mean from the correct branch memory drop
         res = pickle.loads(droputils.allDropContents(t))
         # and check whether it is the same as the calculated one
-        self.assertEqual(res, mean)
+        return (t.oid, res, mean)
+
+
+    def test_myBranch_class(self):
+        """
+        Test creates two random arrays in memory drops, one with a
+        mean below and the other above 0.5. It runs two graphs against
+        each of the arrays drops and checks whether the branch is 
+        traversed on the correct side. It also checks whether the 
+        derived values are correct.
+        """
+        # create and configure the creation of the random array.
+        l = RandomArrayApp("l", "l")
+        l.integer = False
+        l.high = 0.5
+        (oid, resLow, meanLow) = self._runBranchTest(l)
+        self.assertEqual(oid, 'y')
+        self.assertEqual(resLow, meanLow)
+
+        h = RandomArrayApp("h", "h")
+        h.integer = False
+        h.low = 0.5
+        h.high = 1
+        (oid, resHigh, meanHigh) = self._runBranchTest(h)
+        self.assertEqual(oid, 'n')
+        self.assertEqual(resHigh, meanHigh)
+
 
     def test_myData_class(self):
         """
