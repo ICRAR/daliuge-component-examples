@@ -4,6 +4,11 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed workflow. [Andreas Wicenec]
+- Added creation of dist package for test_pypi. [Andreas Wicenec]
+- Added test_pypi to standard commits. [Andreas Wicenec]
+- Removed repository again. [Andreas Wicenec]
+- Release: version v0.1.4 🚀 [Andreas Wicenec]
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
 - Still no luck with PyPi. [Andreas Wicenec]
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
