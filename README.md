@@ -5,7 +5,7 @@
 [![CI](https://github.com/ICRAR/daliuge-component-examples/actions/workflows/main.yml/badge.svg)](https://github.com/ICRAR/daliuge-component-examples/actions/workflows/main.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This repository contains daliuge_component_examples created by ICRAR. They are mostly meant to demonstrate how to implement some of the more advanced features in a DALiuGE component.
+This repository contains daliuge_component_examples created by ICRAR. These are mostly meant to demonstrate how to implement some of the more advanced [DALiuGE](https://github.com/ICRAR/daliuge) features in a component. Please refer to the main [DALiuGE documentation](https://daliuge.readthedocs.io) for more information.
 
 ## Install it from PyPI
 
