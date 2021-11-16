@@ -45,4 +45,4 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI }}
       run: |
         python setup.py sdist bdist_wheel
-        twine upload --repository daliuge-component-examples dist/*
+        twine upload dist/*
