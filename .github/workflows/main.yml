@@ -52,6 +52,11 @@ jobs:
         uses: codecov/codecov-action@v1
         # with:
         #   fail_ci_if_error: true
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.TEST_PYPI }}
+          repository_url: https://test.pypi.org/legacy/
 
   tests_mac:
     needs: linter
