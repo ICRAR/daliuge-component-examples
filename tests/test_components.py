@@ -88,3 +88,6 @@ class TestMyApps(unittest.TestCase):
         Dummy dataURL method test for data drop
         """
         assert MyDataDROP("a", "a").dataURL == "Hello from the dataURL method"
+
+    def test_forcedBranch_class(self):
+        """ """

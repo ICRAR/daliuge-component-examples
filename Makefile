@@ -1,6 +1,7 @@
 .ONESHELL:
 ENV_PREFIX=$(shell python -c "if __import__('pathlib').Path('.venv/bin/pip').exists(): print('.venv/bin/')")
 USING_POETRY=$(shell grep "tool.poetry" pyproject.toml && echo "yes")
+DLG_CONTRIB=$(shell echo $(DLG_ROOT)/code)
 
 .PHONY: help
 help:             ## Show the help.
@@ -24,6 +25,13 @@ install:          ## Install the project in dev mode.
 	@echo "Don't forget to run 'make virtualenv' if you got errors."
 	$(ENV_PREFIX)pip install -e .[test]
 
+.PHONY: dlginstall
+dlginstall:		  ## Install into $DLG_ROOT/code
+	if [ !"$(DLG_ROOT)" ]; then DLG_CONTRIB=$(shell echo "test_code");
+		# DLG_CONTRIB=$(shell echo `docker exec daliuge-engine /bin/bash -c 'printenv DLG_ROOT'`) &&  echo "Installation directory: $(DLG_CONTRIB)";
+	else
+		scp -r ../`basename $(PWD)` $(DLG_CONTRIB); cd $(DLG_CONTRIB)/`basename $(PWD)` && $(ENV_PREFIX)pip install --upgrade -e .; 
+	fi;
 .PHONY: fmt
 fmt:              ## Format code using black & isort.
 	$(ENV_PREFIX)isort daliuge_component_examples/
