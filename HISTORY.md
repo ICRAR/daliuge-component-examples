@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.7 (2021-11-16)
+-------------------
+- Release: version v0.1.7 🚀 [Andreas Wicenec]
 - Added gitchangelog config; commented testpypi upload. [Andreas
   Wicenec]
 - Fix the sequence for PyPi upload. [Andreas Wicenec]
