@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Removed translator from requirements. [Andreas Wicenec]
+
+
+v0.1.8 (2021-12-05)
+-------------------
+- Release: version v0.1.8 🚀 [Andreas Wicenec]
+
+
 v0.1.7 (2021-11-16)
 -------------------
 - Release: version v0.1.7 🚀 [Andreas Wicenec]
