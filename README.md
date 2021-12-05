@@ -7,22 +7,23 @@
 
 This repository contains daliuge_component_examples created by ICRAR. These are mostly meant to demonstrate how to implement some of the more advanced [DALiuGE](https://github.com/ICRAR/daliuge) features in a component. Please refer to the main [DALiuGE documentation](https://daliuge.readthedocs.io) for more information.
 
+## Installation
+
+There are multiple options for the installation, depending on how you are intending to run the DALiuGE engine, directly in a virtual environment (host) or inside a docker container. You can also install it either from PyPI (latest released version).
+
 ## Install it from PyPI
 
+### Engine in virtual environment
 ```bash
 pip install daliuge_component_examples
 ```
-
-## Usage
-
-```py
-from my_component import BaseClass
-
-ComponentClass().component_method()
-```
-
+### Engine in Docker container
 ```bash
-$ python -m daliuge_component_examples
-#or
-$ daliuge_component_examples
+docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code daliuge_component_examples'
 ```
+## Usage
+For example the MyBranch component will be available to the engine when you specify 
+```
+daliuge-component-examples.appComponents.MyBranch
+```
+in the AppClass field of a Python Branch component. The EAGLE palette associated with these components are also generated and can be loaded directly into EAGLE. In that case all the fields are correctly populated for the respective components.
