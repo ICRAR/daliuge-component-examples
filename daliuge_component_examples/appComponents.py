@@ -88,13 +88,14 @@ class MyBranch(BranchAppDrop):
 
 ##
 # @brief ForcedBranch
-# @details Simple branch App, which is told its result as a parameter. This component
-# does uses default input and output ports, but it is internally not using the data passed
-# through them.
+# @details Simple branch App, which is told its result as a parameter.
+# This component does uses default input and output ports, but it is
+# internally not using the data passed through them.
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass Application Class/branch.ForcedBranch/String/readonly/
+# @param[in]
+# param/appclass Application Class/branch.ForcedBranch/String/readonly/
 #     \~English Import direction for application class
 # @param[in] port/dummy Dummy/complex/
 #     \~English Port receiving some input
@@ -109,7 +110,8 @@ class ForcedBranch(BranchAppDrop, NullBarrierApp):
     """Simple branch app that is told the result of its condition"""
 
     def initialize(self, **kwargs):
-        # The result parameter is available to be specified when initializing the component.
+        # The result parameter is available to be specified when initializing
+        # the component.
         # Default is True, i.e. the Y branch is triggered.
         self.result = self._getArg(kwargs, "result", True)
         BranchAppDrop.initialize(self, **kwargs)
