@@ -5,23 +5,18 @@ jobs:
   test:
     name: Generate EAGLE component palette
     runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: daliuge-component-template
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install Dependencies
         run: sudo apt-get update && sudo apt-get install -y doxygen xsltproc
-      - name: Set Environment Variables
-        run: |
-          echo "PROJECT_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-          echo "PROJECT_NAME=$(basename -s .git $(git remote get-url origin))" >> $GITHUB_ENV
       - name: Generate Palette
         env:
           GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         run: |
           wget https://raw.githubusercontent.com/ICRAR/daliuge/master/tools/xml2palette/xml2palette.py
-          echo $PROJECT_NAME
-          echo $PROJECT_VERSION
-          echo $GITHUB_REF_NAME
           python3 xml2palette.py -i ./ -o $PROJECT_NAME-$GITHUB_REF_NAME.palette
       - name: Push palette to ICRAR/EAGLE_test_repo
         env:
@@ -35,5 +30,5 @@ jobs:
           mv $PROJECT_NAME-$GITHUB_REF_NAME.palette EAGLE_test_repo/$PROJECT_NAME/
           cd EAGLE_test_repo
           git add *
-          git commit -m "Automatically generated DALiuGE palette (branch $GITHUB_REF_NAME, commit $PROJECT_VERSION)"
+          git commit -m "Automatically generated DALiuGE palette (branch $GITHUB_REF_NAME, commit $GITHUB_SHA)"
           git push
