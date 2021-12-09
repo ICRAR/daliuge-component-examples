@@ -1,0 +1,35 @@
+name: EAGLE Palette
+on: [push]
+
+jobs:
+  test:
+    name: Generate EAGLE component palette
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: daliuge-component-template
+      PROJECT_VERSION: $(git rev-parse --short HEAD)
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y doxygen xsltproc
+      - name: Generate Palette
+        env:
+          GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+        run: |
+          wget https://raw.githubusercontent.com/ICRAR/daliuge/master/tools/xml2palette/xml2palette.py
+          python3 xml2palette.py -i ./ -o jacal-$GITHUB_REF_NAME.palette
+      - name: Push palette to ICRAR/EAGLE_test_repo
+        env:
+          EAGLE_USERNAME: eagle-updater
+          EAGLE_GITHUB_ACCESS_TOKEN: ${{secrets.EAGLE_GITHUB_ACCESS_TOKEN}}
+        run: |
+          git config --global user.name $EAGLE_USERNAME
+          git config --global user.email "$EAGLE_USERNAME@gmail.com"
+          git clone https://$EAGLE_GITHUB_ACCESS_TOKEN@github.com/ICRAR/EAGLE_test_repo
+          mkdir -p EAGLE_test_repo/$PROJECT_NAME
+          mv $PROJECT_NAME-$GITHUB_REF_NAME.palette EAGLE_test_repo/$PROJECT_NAME/
+          cd EAGLE_test_repo
+          git add *
+          git commit -m "Automatically generated DALiuGE palette (branch $GITHUB_REF_NAME, commit $PROJECT_VERSION)"
+          git push
