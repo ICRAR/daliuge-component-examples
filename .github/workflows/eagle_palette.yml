@@ -12,8 +12,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y doxygen xsltproc
       - name: Set Environment Variables
         run: |
-          echo "PROJECT_NAME=$(basename -s .git $(git remote get-url origin))" >> $GITHUB_ENV
           echo "PROJECT_VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "PROJECT_NAME=$(basename -s .git $(git remote get-url origin))" >> $GITHUB_ENV
       - name: Generate Palette
         env:
           GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
