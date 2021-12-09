@@ -18,6 +18,8 @@ jobs:
           GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         run: |
           wget https://raw.githubusercontent.com/ICRAR/daliuge/master/tools/xml2palette/xml2palette.py
+          echo $PROJECT_NAME
+          echo $GITHUB_REF_NAME
           python3 xml2palette.py -i ./ -o $PROJECT_NAME-$GITHUB_REF_NAME.palette
       - name: Push palette to ICRAR/EAGLE_test_repo
         env:
