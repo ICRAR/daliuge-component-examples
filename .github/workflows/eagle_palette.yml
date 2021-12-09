@@ -6,7 +6,7 @@ jobs:
     name: Generate EAGLE component palette
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: daliuge-component-template
+      PROJECT_NAME: $(basename -s .git $(git remote get-url origin))
       PROJECT_VERSION: $(git rev-parse --short HEAD)
     steps:
       - name: Setup Python
@@ -18,7 +18,7 @@ jobs:
           GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         run: |
           wget https://raw.githubusercontent.com/ICRAR/daliuge/master/tools/xml2palette/xml2palette.py
-          python3 xml2palette.py -i ./ -o jacal-$GITHUB_REF_NAME.palette
+          python3 xml2palette.py -i ./ -o $PROJECT_NAME-$GITHUB_REF_NAME.palette
       - name: Push palette to ICRAR/EAGLE_test_repo
         env:
           EAGLE_USERNAME: eagle-updater
