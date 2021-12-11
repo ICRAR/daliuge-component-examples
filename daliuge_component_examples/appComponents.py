@@ -15,6 +15,7 @@ __version__ = "0.1.0"
 import logging
 import pickle
 
+import numpy as np
 from glob import glob
 from dlg import droputils
 from dlg.drop import BranchAppDrop, BarrierAppDROP
@@ -124,6 +125,7 @@ class ForcedBranch(BranchAppDrop, NullBarrierApp):
     def condition(self):
         return self.result
 
+
 ##
 # @brief FileGlob
 # @details An App that uses glob to find all files matching a
@@ -142,9 +144,10 @@ class ForcedBranch(BranchAppDrop, NullBarrierApp):
 #     \~English Port carrying the list of files
 # @par EAGLE_END
 
+
 class FileGlob(BarrierAppDROP):
     """
-    Simple app collecting file names in a directory 
+    Simple app collecting file names in a directory
     based on a wild-card pattern
     """
 
@@ -152,7 +155,7 @@ class FileGlob(BarrierAppDROP):
         self.wildcard = self._getArg(kwargs, "wildcard", "*")
         self.filepath = self._getArg(kwargs, "filepath", ".")
         BarrierAppDROP.initialize(self, **kwargs)
-    
+
     def writeData(self):
         """
         Prepare the data and write to all outputs
@@ -164,13 +167,14 @@ class FileGlob(BarrierAppDROP):
 
     def run(self):
         filetmpl = f"{self.filepath}/{self.wildcard}"
-        self.value = (glob(filetmpl))
+        self.value = glob(filetmpl)
         self.writeData()
+
 
 ##
 # @brief PickOne
 # @details App that picks the first element of an input list, passes that
-# to all outputs, except the first one. The first output is used to pass 
+# to all outputs, except the first one. The first output is used to pass
 # the remaining array on. This app is useful for a loop.
 #
 # @par EAGLE_START
@@ -187,19 +191,27 @@ class PickOne(BarrierAppDROP):
     """
     Simple app picking one element at a time. Good for Loops.
     """
+
     def initialize(self, **kwargs):
         BarrierAppDROP.initialize(self, **kwargs)
-    
+
     def readData(self):
         if len(self.inputs) != 1:
             raise ValueError
         input = self.inputs[0]
-        data = list(pickle.loads(droputils.allDropContents(input)))
-        if type(data) not in (list, tuple):
+        data = pickle.loads(droputils.allDropContents(input))
+
+        # make sure we always have a ndarray with at least 1dim.
+        if type(data) not in (list, tuple) and \
+            not isinstance(data, (np.ndarray)):
             raise TypeError
+        if isinstance(data, np.ndarray) and data.ndim == 0:
+            data = np.array([data])
+        else:
+            data = np.array(data)
         self.value = data[0] if len(data) else None
         self.rest = data[1:] if len(data) > 1 else []
-    
+
     def writeData(self):
         """
         Prepare the data and write to all outputs
