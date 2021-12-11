@@ -4,6 +4,14 @@ Changelog
 
 (unreleased)
 ------------
+- Added FileGlob and PickOne components with tests. [Andreas Wicenec]
+- Better installation description. [Andreas Wicenec]
+- Fixed linting errors. [Andreas Wicenec]
+
+
+v0.1.9 (2021-12-05)
+-------------------
+- Release: version v0.1.9 🚀 [Andreas Wicenec]
 - Removed translator from requirements. [Andreas Wicenec]
 
 
