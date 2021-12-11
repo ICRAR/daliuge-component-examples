@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Increased test coverage to 100% [Andreas Wicenec]
+
+
+v0.2.1 (2021-12-11)
+-------------------
+- Release: version v0.2.1 🚀 [Andreas Wicenec]
 - Better testing for array type. [Andreas Wicenec]
 
 
