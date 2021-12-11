@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+v0.2.3 (2021-12-11)
+-------------------
+- Release: version v0.2.3 🚀 [Andreas Wicenec]
+
+
 v0.2.2 (2021-12-11)
 -------------------
 - Release: version v0.2.2 🚀 [Andreas Wicenec]
