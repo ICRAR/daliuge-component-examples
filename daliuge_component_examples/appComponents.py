@@ -14,12 +14,11 @@ Be creative! do whatever you need to do!
 __version__ = "0.1.0"
 import logging
 import pickle
+from glob import glob
 
 import numpy as np
-from glob import glob
 from dlg import droputils
-from dlg.drop import BranchAppDrop, BarrierAppDROP
-from dlg.apps.simple import NullBarrierApp
+from dlg.drop import BarrierAppDROP, BranchAppDrop
 
 logger = logging.getLogger(__name__)
 
@@ -86,44 +85,6 @@ class MyBranch(BranchAppDrop):
             result = False
         self.writeData()
         return result
-
-
-##
-# @brief ForcedBranch
-# @details Simple branch App, which is told its result as a parameter.
-# This component does uses default input and output ports, but it is
-# internally not using the data passed through them.
-#
-# @par EAGLE_START
-# @param category PythonApp
-# @param[in]
-# param/appclass Application Class/
-# daliuge_component_examples.appComponents.ForcedBranch/String/readonly/
-#     \~English Import direction for application class
-# @param[in] port/dummy Dummy/complex/
-#     \~English Port receiving some input
-# @param[out] port/Y Y/event/
-#     \~English Port triggering the Y branch
-# @param[out] port/N N/event/
-#     \~English Port triggering the N branch
-# @par EAGLE_END
-
-
-class ForcedBranch(BranchAppDrop, NullBarrierApp):
-    """Simple branch app that is told the result of its condition"""
-
-    def initialize(self, **kwargs):
-        # The result parameter is available to be specified when initializing
-        # the component.
-        # Default is True, i.e. the Y branch is triggered.
-        self.result = self._getArg(kwargs, "result", True)
-        BranchAppDrop.initialize(self, **kwargs)
-
-    def run(self):
-        pass
-
-    def condition(self):
-        return self.result
 
 
 ##
@@ -196,14 +157,13 @@ class PickOne(BarrierAppDROP):
         BarrierAppDROP.initialize(self, **kwargs)
 
     def readData(self):
-        if len(self.inputs) != 1:
-            raise ValueError
         input = self.inputs[0]
         data = pickle.loads(droputils.allDropContents(input))
 
         # make sure we always have a ndarray with at least 1dim.
-        if type(data) not in (list, tuple) and \
-            not isinstance(data, (np.ndarray)):
+        if type(data) not in (list, tuple) and not isinstance(
+            data, (np.ndarray)
+        ):
             raise TypeError
         if isinstance(data, np.ndarray) and data.ndim == 0:
             data = np.array([data])
@@ -216,15 +176,15 @@ class PickOne(BarrierAppDROP):
         """
         Prepare the data and write to all outputs
         """
-        # write rest to first output
-        d = pickle.dumps(self.rest)
-        output = self.outputs[0]
-        output.len = len(d)
-        output.write(d)
+        # write rest to array output
         # and value to every other output
-        for output in self.outputs[1:]:
-            d = pickle.dumps(self.value)
-            output.len = len(d)
+        for output in self.outputs:
+            if output.name == "array":
+                d = pickle.dumps(self.rest)
+                output.len = len(d)
+            else:
+                d = pickle.dumps(self.value)
+                output.len = len(d)
             output.write(d)
 
     def run(self):

@@ -5,11 +5,7 @@ import pickle
 from glob import glob
 from dlg import droputils
 
-from daliuge_component_examples import (
-    MyBranch, 
-    MyDataDROP,
-    FileGlob,
-    PickOne)
+from daliuge_component_examples import MyBranch, MyDataDROP, FileGlob, PickOne
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates
@@ -88,8 +84,8 @@ class TestMyApps(unittest.TestCase):
         Testing the globbing method finding *this* file
         """
         i = NullDROP("i", "i")  # just to be able to start the execution
-        g = FileGlob('g', 'g')
-        m = InMemoryDROP('m', 'm')
+        g = FileGlob("g", "g")
+        m = InMemoryDROP("m", "m")
         g.addInput(i)
         m.addProducer(g)
         g.wildcard = os.path.basename(os.path.realpath(__file__))
@@ -98,7 +94,7 @@ class TestMyApps(unittest.TestCase):
         with droputils.DROPWaiterCtx(self, m, timeout=10):
             i.setCompleted()
         res = pickle.loads(droputils.allDropContents(m))
-        self.assertEqual(fileList,res)
+        self.assertEqual(fileList, res)
 
     def test_PickOne_class(self):
         """
@@ -109,16 +105,18 @@ class TestMyApps(unittest.TestCase):
         l.integer = True
         l.high = 100
         l.size = 10
-        a = InMemoryDROP('a', 'a')
-        p = PickOne('p', 'p')
-        r = InMemoryDROP('r', 'r')
-        o = InMemoryDROP('o', 'o')
+        a = InMemoryDROP("a", "a")
+        a.name = "start_array"
+        p = PickOne("p", "p")
+        r = InMemoryDROP("r", "r")
+        r.name = "array"
+        o = InMemoryDROP("o", "o")
 
         i.addConsumer(l)
         a.addProducer(l)
         p.addInput(a)
-        r.addProducer(p) # this should contain the rest elements
-        o.addProducer(p) # this should contain the first element
+        r.addProducer(p)  # this should contain the rest elements
+        o.addProducer(p)  # this should contain the first element
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             i.setCompleted()
         in_array = pickle.loads(droputils.allDropContents(a))
@@ -126,6 +124,34 @@ class TestMyApps(unittest.TestCase):
         rest_array = pickle.loads(droputils.allDropContents(r))
         self.assertEqual(in_array[0], first)
         self.assertEqual(all(in_array[1:]), all(rest_array))
+
+    def test_PickOne_wrong_input_type(self):
+        """
+        Testing the PickOne with wrong input type
+        """
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(1))  # this is scalar not array
+        a.name = "start_array"
+        p = PickOne("p", "p")
+
+        p.addInput(a)
+        with droputils.DROPWaiterCtx(self, p, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
+
+    def test_PickOne_0dim(self):
+        """
+        Testing the PickOne with 0dim input
+        """
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(np.array(1)))  # this is 0dim not array
+        a.name = "start_array"
+        p = PickOne("p", "p")
+
+        p.addInput(a)
+        with droputils.DROPWaiterCtx(self, p, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
 
     def test_myData_class(self):
         """
@@ -138,6 +164,3 @@ class TestMyApps(unittest.TestCase):
         Dummy dataURL method test for data drop
         """
         assert MyDataDROP("a", "a").dataURL == "Hello from the dataURL method"
-
-    def test_forcedBranch_class(self):
-        """ """
