@@ -1,9 +1,15 @@
 import pytest, unittest
+import os
 import pickle
 
+from glob import glob
 from dlg import droputils
 
-from daliuge_component_examples import MyBranch, MyDataDROP
+from daliuge_component_examples import (
+    MyBranch, 
+    MyDataDROP,
+    FileGlob,
+    PickOne)
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates
@@ -76,6 +82,50 @@ class TestMyApps(unittest.TestCase):
         (oid, resHigh, meanHigh) = self._runBranchTest(h)
         self.assertEqual(oid, "n")
         self.assertEqual(resHigh, meanHigh)
+
+    def test_FileGlob_class(self):
+        """
+        Testing the globbing method finding *this* file
+        """
+        i = NullDROP("i", "i")  # just to be able to start the execution
+        g = FileGlob('g', 'g')
+        m = InMemoryDROP('m', 'm')
+        g.addInput(i)
+        m.addProducer(g)
+        g.wildcard = os.path.basename(os.path.realpath(__file__))
+        g.filepath = os.path.dirname(os.path.realpath(__file__))
+        fileList = glob(f"{g.filepath}/{g.wildcard}")
+        with droputils.DROPWaiterCtx(self, m, timeout=10):
+            i.setCompleted()
+        res = pickle.loads(droputils.allDropContents(m))
+        self.assertEqual(fileList,res)
+
+    def test_PickOne_class(self):
+        """
+        Testing the PickOne app
+        """
+        i = NullDROP("i", "i")  # just to be able to start the execution
+        l = RandomArrayApp("l", "l")
+        l.integer = True
+        l.high = 100
+        l.size = 10
+        a = InMemoryDROP('a', 'a')
+        p = PickOne('p', 'p')
+        r = InMemoryDROP('r', 'r')
+        o = InMemoryDROP('o', 'o')
+
+        i.addConsumer(l)
+        a.addProducer(l)
+        p.addInput(a)
+        r.addProducer(p) # this should contain the rest elements
+        o.addProducer(p) # this should contain the first element
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            i.setCompleted()
+        in_array = pickle.loads(droputils.allDropContents(a))
+        first = pickle.loads(droputils.allDropContents(o))
+        rest_array = pickle.loads(droputils.allDropContents(r))
+        self.assertEqual(in_array[0], first)
+        self.assertEqual(all(in_array[1:]), all(rest_array))
 
     def test_myData_class(self):
         """

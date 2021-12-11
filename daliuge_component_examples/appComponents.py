@@ -15,8 +15,9 @@ __version__ = "0.1.0"
 import logging
 import pickle
 
+from glob import glob
 from dlg import droputils
-from dlg.drop import BranchAppDrop
+from dlg.drop import BranchAppDrop, BarrierAppDROP
 from dlg.apps.simple import NullBarrierApp
 
 logger = logging.getLogger(__name__)
@@ -95,7 +96,8 @@ class MyBranch(BranchAppDrop):
 # @par EAGLE_START
 # @param category PythonApp
 # @param[in]
-# param/appclass Application Class/branch.ForcedBranch/String/readonly/
+# param/appclass Application Class/
+# daliuge_component_examples.appComponents.ForcedBranch/String/readonly/
 #     \~English Import direction for application class
 # @param[in] port/dummy Dummy/complex/
 #     \~English Port receiving some input
@@ -121,3 +123,98 @@ class ForcedBranch(BranchAppDrop, NullBarrierApp):
 
     def condition(self):
         return self.result
+
+##
+# @brief FileGlob
+# @details An App that uses glob to find all files matching a
+# template given by a filepath and a wildcard string
+#
+# @par EAGLE_START
+# @param category PythonApp
+# @param[in] param/wildcard wildcard/"*"/String/readwrite/
+#     \~English Wildcard used to search for files
+# @param[in] param/filepath filepath/"."/String/readwrite/
+#     \~English Path to search for files
+# param/appclass Application Class/
+# daliuge_component_examples.appComponents.FileGlob/String/readonly/
+#     \~English Import path for application class
+# @param[out] port/file_list file_list/array/
+#     \~English Port carrying the list of files
+# @par EAGLE_END
+
+class FileGlob(BarrierAppDROP):
+    """
+    Simple app collecting file names in a directory 
+    based on a wild-card pattern
+    """
+
+    def initialize(self, **kwargs):
+        self.wildcard = self._getArg(kwargs, "wildcard", "*")
+        self.filepath = self._getArg(kwargs, "filepath", ".")
+        BarrierAppDROP.initialize(self, **kwargs)
+    
+    def writeData(self):
+        """
+        Prepare the data and write to all outputs
+        """
+        for output in self.outputs:
+            d = pickle.dumps(self.value)
+            output.len = len(d)
+            output.write(d)
+
+    def run(self):
+        filetmpl = f"{self.filepath}/{self.wildcard}"
+        self.value = (glob(filetmpl))
+        self.writeData()
+
+##
+# @brief PickOne
+# @details App that picks the first element of an input list, passes that
+# to all outputs, except the first one. The first output is used to pass 
+# the remaining array on. This app is useful for a loop.
+#
+# @par EAGLE_START
+# @param category PythonApp
+# param/appclass Application Class/
+# daliuge_component_examples.appComponents.PickOne/String/readonly/
+#     \~English Import path for application class
+# @param[in] port/list list/"*"/list/readwrite/
+#     \~English List of elements
+# @param[out] port/element element/complex/
+#     \~English Port carrying the first element of input list
+# @par EAGLE_END
+class PickOne(BarrierAppDROP):
+    """
+    Simple app picking one element at a time. Good for Loops.
+    """
+    def initialize(self, **kwargs):
+        BarrierAppDROP.initialize(self, **kwargs)
+    
+    def readData(self):
+        if len(self.inputs) != 1:
+            raise ValueError
+        input = self.inputs[0]
+        data = list(pickle.loads(droputils.allDropContents(input)))
+        if type(data) not in (list, tuple):
+            raise TypeError
+        self.value = data[0] if len(data) else None
+        self.rest = data[1:] if len(data) > 1 else []
+    
+    def writeData(self):
+        """
+        Prepare the data and write to all outputs
+        """
+        # write rest to first output
+        d = pickle.dumps(self.rest)
+        output = self.outputs[0]
+        output.len = len(d)
+        output.write(d)
+        # and value to every other output
+        for output in self.outputs[1:]:
+            d = pickle.dumps(self.value)
+            output.len = len(d)
+            output.write(d)
+
+    def run(self):
+        self.readData()
+        self.writeData()
