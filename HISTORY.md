@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Better testing for array type. [Andreas Wicenec]
+
+
+v0.2.0 (2021-12-11)
+-------------------
+- Release: version v0.2.0 🚀 [Andreas Wicenec]
 - Added FileGlob and PickOne components with tests. [Andreas Wicenec]
 - Better installation description. [Andreas Wicenec]
 - Fixed linting errors. [Andreas Wicenec]
