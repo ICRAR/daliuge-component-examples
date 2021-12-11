@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.2.2 (2021-12-11)
+-------------------
+- Release: version v0.2.2 🚀 [Andreas Wicenec]
 - Increased test coverage to 100% [Andreas Wicenec]
 
 
