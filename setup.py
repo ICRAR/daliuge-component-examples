@@ -41,7 +41,7 @@ setup(
     install_requires=read_requirements("requirements.txt"),
     entry_points={
         "console_scripts": [
-            "daliuge_component_examples = daliuge_component_examples.__main__:main"
+            "dlg_example_cmpts = dlg_example_cmpts.__main__:main"
         ]
     },
     extras_require={"test": read_requirements("requirements-test.txt")},

@@ -5,7 +5,7 @@ import pickle
 from glob import glob
 from dlg import droputils
 
-from daliuge_component_examples import MyBranch, MyDataDROP, FileGlob, PickOne
+from dlg_example_cmpts import MyBranch, MyDataDROP, FileGlob, PickOne
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates

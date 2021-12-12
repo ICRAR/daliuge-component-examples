@@ -40,7 +40,8 @@ logger = logging.getLogger(__name__)
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass Application Class/branch.MyBranch/String/readonly/
+# @param[in] param/appclass Application Class/
+# dlg_example_cmpts.appCmpts.MyBranch/String/readonly/
 #     \~English Import direction for application class
 # @param[in] port/array Array/float/
 #     \~English Port receiving the input array
@@ -99,7 +100,7 @@ class MyBranch(BranchAppDrop):
 # @param[in] param/filepath filepath/"."/String/readwrite/
 #     \~English Path to search for files
 # param/appclass Application Class/
-# daliuge_component_examples.appComponents.FileGlob/String/readonly/
+# dlg_example_cmpts.appCmpts.FileGlob/String/readonly/
 #     \~English Import path for application class
 # @param[out] port/file_list file_list/array/
 #     \~English Port carrying the list of files
@@ -141,7 +142,7 @@ class FileGlob(BarrierAppDROP):
 # @par EAGLE_START
 # @param category PythonApp
 # param/appclass Application Class/
-# daliuge_component_examples.appComponents.PickOne/String/readonly/
+# dlg_example_cmpts.appCmpts.PickOne/String/readonly/
 #     \~English Import path for application class
 # @param[in] port/rest_array rest_array//array/readwrite/
 #     \~English List of elements

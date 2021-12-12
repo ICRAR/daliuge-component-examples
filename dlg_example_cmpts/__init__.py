@@ -1,7 +1,7 @@
-__package__ = "daliuge_component_examples"
+__package__ = "dlg_example_cmpts"
 # The following imports are the binding to the DALiuGE system
 # extend the following as required
-from .appComponents import FileGlob, MyBranch, PickOne
-from .dataComponents import MyDataDROP
+from .appCmpts import FileGlob, MyBranch, PickOne
+from .dataCmpts import MyDataDROP
 
 __all__ = ["MyBranch", "MyDataDROP", "FileGlob", "PickOne"]
