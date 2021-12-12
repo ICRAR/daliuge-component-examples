@@ -1,7 +1,7 @@
 """
-daliuge_component_examples appComponent module.
+dlg_example_cmpts appComponent module.
 
-This is the module of daliuge_component_examples containing DALiuGE
+This is the module of dlg_example_cmpts containing DALiuGE
 application components.
 Here you put your main application classes and objects.
 

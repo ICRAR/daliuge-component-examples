@@ -1,6 +1,6 @@
 # How to develop on this project
 
-daliuge_component_examples welcomes contributions from the community.
+dlg_example_cmpts welcomes contributions from the community.
 
 **You need PYTHON3!**
 

@@ -1,7 +1,7 @@
 """
-daliuge_component_examples component module.
+dlg_example_cmpts component module.
 
-This is the module of daliuge_component_examples containing DALiuGE data
+This is the module of dlg_example_cmpts containing DALiuGE data
 components. Here you put your main data classes and objects.
 
 Typically a component project will contain multiple components and will

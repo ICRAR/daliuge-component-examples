@@ -7,7 +7,7 @@ from . import MyBranch  # pragma: no cover
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
-    `python -m daliuge_component_examples` and `$ daliuge_component_examples `.
+    `python -m dlg_example_cmpts` and `$ dlg_example_cmpts `.
 
     This is your program's entry point.
 
@@ -21,8 +21,8 @@ def main() -> None:  # pragma: no cover
         * Run an application (Flask, FastAPI, Django, etc.)
     """
     parser = argparse.ArgumentParser(
-        description="daliuge_component_examples.",
-        epilog="Enjoy the daliuge_component_examples functionality!",
+        description="dlg_example_cmpts.",
+        epilog="Enjoy the dlg_example_cmpts functionality!",
     )
     # This is required positional argument
     parser.add_argument(

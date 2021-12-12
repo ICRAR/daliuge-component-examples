@@ -5,7 +5,7 @@
 [![CI](https://github.com/ICRAR/daliuge-component-examples/actions/workflows/main.yml/badge.svg)](https://github.com/ICRAR/daliuge-component-examples/actions/workflows/main.yml)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This repository contains daliuge_component_examples created by ICRAR. These are mostly meant to demonstrate how to implement some of the more advanced [DALiuGE](https://github.com/ICRAR/daliuge) features in a component. Please refer to the main [DALiuGE documentation](https://daliuge.readthedocs.io) for more information.
+This repository contains dlg_example_cmpts created by ICRAR. These are mostly meant to demonstrate how to implement some of the more advanced [DALiuGE](https://github.com/ICRAR/daliuge) features in a component. Please refer to the main [DALiuGE documentation](https://daliuge.readthedocs.io) for more information.
 
 ## Installation
 
@@ -15,11 +15,11 @@ There are multiple options for the installation, depending on how you are intend
 
 ### Engine in virtual environment
 ```bash
-pip install daliuge_component_examples
+pip install dlg_example_cmpts
 ```
 ### Engine in Docker container
 ```bash
-docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code daliuge_component_examples'
+docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_example_cmpts'
 ```
 ## Usage
 For example the MyBranch component will be available to the engine when you specify 
