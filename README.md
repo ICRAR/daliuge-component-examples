@@ -24,6 +24,6 @@ docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_e
 ## Usage
 For example the MyBranch component will be available to the engine when you specify 
 ```
-dlg_example_cmpts.appCmpts.MyBranch
+dlg_example_cmpts.apps.MyBranch
 ```
 in the AppClass field of a Python Branch component. The EAGLE palette associated with these components are also generated and can be loaded directly into EAGLE. In that case all the fields are correctly populated for the respective components.
