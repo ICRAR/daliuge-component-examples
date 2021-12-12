@@ -4,6 +4,8 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed setup script. [Andreas Wicenec]
+- Release: version v0.2.3 🚀 [Andreas Wicenec]
 - Refactoring names. [Andreas Wicenec]
 - Refactoring names. [Andreas Wicenec]
 
