@@ -1,4 +1,4 @@
-"""Python setup.py for daliuge_component_examples package"""
+"""Python setup.py for dlg_example_cmpts package"""
 import io
 import os
 from setuptools import find_packages, setup
@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 
 def read(*paths, **kwargs):
     """Read the contents of a text file safely.
-    >>> read("daliuge_component_examples", "VERSION")
+    >>> read("dlg_example_cmpts", "VERSION")
     '0.1.0'
     >>> read("README.md")
     ...
@@ -30,8 +30,8 @@ def read_requirements(path):
 
 
 setup(
-    name="daliuge_component_examples",
-    version=read("daliuge_component_examples", "VERSION"),
+    name="dlg_example_cmpts",
+    version=read("dlg_example_cmpts", "VERSION"),
     description="DALiuGE Component Examples created by ICRAR",
     url="https://github.com/ICRAR/daliuge-component-examples/",
     long_description=read("README.md"),
