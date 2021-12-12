@@ -4,6 +4,13 @@ Changelog
 
 (unreleased)
 ------------
+- Refactoring names. [Andreas Wicenec]
+- Refactoring names. [Andreas Wicenec]
+
+
+v0.2.2 (2021-12-11)
+-------------------
+- Release: version v0.2.2 🚀 [Andreas Wicenec]
 - Release: version v0.2.4 🚀 [Andreas Wicenec]
 - Release: version v0.2.4 🚀 [Andreas Wicenec]
 - Update requirements.txt. [awicenec]
