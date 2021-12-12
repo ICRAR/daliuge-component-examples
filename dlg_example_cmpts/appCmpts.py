@@ -143,10 +143,11 @@ class FileGlob(BarrierAppDROP):
 # param/appclass Application Class/
 # daliuge_component_examples.appComponents.PickOne/String/readonly/
 #     \~English Import path for application class
-# @param[in] port/list list/"*"/list/readwrite/
+# @param[in] port/rest_array rest_array//array/readwrite/
 #     \~English List of elements
 # @param[out] port/element element/complex/
-#     \~English Port carrying the first element of input list
+#     \~English Port carrying the first element of input array
+#               the type is dependent on the list element type.
 # @par EAGLE_END
 class PickOne(BarrierAppDROP):
     """
@@ -179,7 +180,7 @@ class PickOne(BarrierAppDROP):
         # write rest to array output
         # and value to every other output
         for output in self.outputs:
-            if output.name == "array":
+            if output.name == "rest_array":
                 d = pickle.dumps(self.rest)
                 output.len = len(d)
             else:
