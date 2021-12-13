@@ -4,6 +4,15 @@ Changelog
 
 (unreleased)
 ------------
+- Updated README and init. [Andreas Wicenec]
+- Renamed apps and data. [Andreas Wicenec]
+- Updated readme. [Andreas Wicenec]
+- Removed last mentioning of full name. [Andreas Wicenec]
+
+
+v0.2.3 (2021-12-12)
+-------------------
+- Release: version v0.2.3 🚀 [Andreas Wicenec]
 - Fixed setup script. [Andreas Wicenec]
 - Release: version v0.2.3 🚀 [Andreas Wicenec]
 - Refactoring names. [Andreas Wicenec]
