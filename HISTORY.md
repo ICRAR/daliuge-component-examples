@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.0 (2021-12-13)
+-------------------
+- Release: version v0.1.0 🚀 [Andreas Wicenec]
 - Release: version v0.1.0 🚀 [Andreas Wicenec]
 - Updated README and init. [Andreas Wicenec]
 - Renamed apps and data. [Andreas Wicenec]
