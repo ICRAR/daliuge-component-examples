@@ -210,7 +210,6 @@ class PickOne(BarrierAppDROP):
 #     \~English Port carrying the JSON structure
 # @par EAGLE_END
 class String2JSON(BarrierAppDROP):
-
     def initialize(self, **kwargs):
         BarrierAppDROP.initialize(self, **kwargs)
 
@@ -219,7 +218,7 @@ class String2JSON(BarrierAppDROP):
         data = pickle.loads(droputils.allDropContents(input))
 
         # make sure we always have a string with at least 1dim.
-        if type(data) != type(""):
+        if not isinstance(data, str):
             raise TypeError
         self.json = json.loads(data)
 
