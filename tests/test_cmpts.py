@@ -13,7 +13,7 @@ from dlg_example_cmpts import (
     String2JSON,
 )
 from dlg.apps.simple import RandomArrayApp
-from dlg.drop import InMemoryDROP, NullDROP
+from dlg.drop import FileDROP, InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates
 import logging
 import json
@@ -161,10 +161,11 @@ class TestMyApps(unittest.TestCase):
         """
         Testing String2JSON with correct input
         """
-        example = '[{"a":1, "b":2},[1,2,3,4,5]]'
+        example = b'[{"a":1, "b":2},[1,2,3,4,5]]'
         a = InMemoryDROP("a", "a")
-        a.write(pickle.dumps(example))
         a.name = "string"
+        a.write(example)
+        # f = FileDROP('f', 'f', filepath='/tmp/dlg/workspace/NGASLogProcess11_2021-12-16T07-50-33.653962/2021-12-16T07_48_09_-3_0')
         p = String2JSON("p", "p")
         o = InMemoryDROP("o", "o")
 
@@ -173,16 +174,17 @@ class TestMyApps(unittest.TestCase):
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
 
+        example = json.loads(droputils.allDropContents(a))
         result = pickle.loads(droputils.allDropContents(o))
-        self.assertEqual(result, json.loads(example))
+        self.assertEqual(result, example)
 
     def test_String2JSON_wrong_type(self):
         """
         Testing String2JSON with wrong input
         """
-        example = 5
+        example = b"gibberish"
         a = InMemoryDROP("a", "a")
-        a.write(pickle.dumps(example))
+        a.write(example)
         a.name = "string"
         p = String2JSON("p", "p")
         o = InMemoryDROP("o", "o")

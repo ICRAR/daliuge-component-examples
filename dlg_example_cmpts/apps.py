@@ -215,12 +215,11 @@ class String2JSON(BarrierAppDROP):
 
     def readData(self):
         input = self.inputs[0]  # ignore all but the first
-        data = pickle.loads(droputils.allDropContents(input))
-
-        # make sure we always have a string with at least 1dim.
-        if not isinstance(data, str):
+        try:
+            data = json.loads(droputils.allDropContents(input))
+        except json.decoder.JSONDecodeError:
             raise TypeError
-        self.json = json.loads(data)
+        self.json = data
 
     def writeData(self):
         """
