@@ -2,6 +2,13 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Fixed case where data was written as a string, not pickled. [Andreas
+  Wicenec]
+- Release: version v0.1.3 🚀 [Andreas Wicenec]
+
+
 v0.1.2 (2021-12-16)
 -------------------
 - Release: version v0.1.2 🚀 [Andreas Wicenec]
