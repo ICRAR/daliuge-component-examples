@@ -4,6 +4,7 @@ Changelog
 
 (unreleased)
 ------------
+- Release: version v0.1.3 🚀 [Andreas Wicenec]
 - Fixed case where data was written as a string, not pickled. [Andreas
   Wicenec]
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
