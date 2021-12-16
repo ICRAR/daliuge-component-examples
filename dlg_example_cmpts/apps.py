@@ -12,6 +12,7 @@ Be creative! do whatever you need to do!
 """
 
 __version__ = "0.1.0"
+import json
 import logging
 import pickle
 from glob import glob
@@ -187,6 +188,50 @@ class PickOne(BarrierAppDROP):
             else:
                 d = pickle.dumps(self.value)
                 output.len = len(d)
+            output.write(d)
+
+    def run(self):
+        self.readData()
+        self.writeData()
+
+
+##
+# @brief String2JSON
+# @details App that reads a string from a single input and tries
+# to convert that to JSON
+# @par EAGLE_START
+# @param category PythonApp
+# param/appclass Application Class/
+# dlg_example_cmpts.apps.String2JSON/String/readonly/
+#     \~English Import path for application class
+# @param[in] port/string string//string/readwrite/
+#     \~English String to be converted
+# @param[out] port/element element/complex/
+#     \~English Port carrying the JSON structure
+# @par EAGLE_END
+class String2JSON(BarrierAppDROP):
+
+    def initialize(self, **kwargs):
+        BarrierAppDROP.initialize(self, **kwargs)
+
+    def readData(self):
+        input = self.inputs[0]  # ignore all but the first
+        data = pickle.loads(droputils.allDropContents(input))
+
+        # make sure we always have a string with at least 1dim.
+        if type(data) != type(""):
+            raise TypeError
+        self.json = json.loads(data)
+
+    def writeData(self):
+        """
+        Prepare the data and write to all outputs
+        """
+        # write rest to array output
+        # and value to every other output
+        for output in self.outputs:
+            d = pickle.dumps(self.json)
+            output.len = len(d)
             output.write(d)
 
     def run(self):

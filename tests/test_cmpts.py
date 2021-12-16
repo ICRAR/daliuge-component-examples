@@ -5,11 +5,18 @@ import pickle
 from glob import glob
 from dlg import droputils
 
-from dlg_example_cmpts import MyBranch, MyDataDROP, FileGlob, PickOne
+from dlg_example_cmpts import (
+    MyBranch,
+    MyDataDROP,
+    FileGlob,
+    PickOne,
+    String2JSON,
+)
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates
 import logging
+import json
 import numpy as np
 from time import sleep
 
@@ -147,6 +154,42 @@ class TestMyApps(unittest.TestCase):
 
         p.addInput(a)
         with droputils.DROPWaiterCtx(self, p, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
+
+    def test_String2JSON(self):
+        """
+        Testing String2JSON with correct input
+        """
+        example = '[{"a":1, "b":2},[1,2,3,4,5]]'
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(example))
+        a.name = "string"
+        p = String2JSON("p", "p")
+        o = InMemoryDROP("o", "o")
+
+        p.addInput(a)
+        p.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+
+        result = pickle.loads(droputils.allDropContents(o))
+        self.assertEqual(result, json.loads(example))
+
+    def test_String2JSON_wrong_type(self):
+        """
+        Testing String2JSON with wrong input
+        """
+        example = 5
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(example))
+        a.name = "string"
+        p = String2JSON("p", "p")
+        o = InMemoryDROP("o", "o")
+
+        p.addInput(a)
+        p.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
         self.assertRaises(TypeError)
 
