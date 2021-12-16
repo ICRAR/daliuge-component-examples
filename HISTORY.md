@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.2 (2021-12-16)
+-------------------
+- Release: version v0.1.2 🚀 [Andreas Wicenec]
 - Fixed lint complaint. [Andreas Wicenec]
 - Added String2JSON app. [Andreas Wicenec]
 
