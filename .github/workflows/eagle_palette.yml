@@ -31,5 +31,5 @@ jobs:
           mv $PROJECT_NAME-$GITHUB_REF_NAME.palette EAGLE_test_repo/$PROJECT_NAME/
           cd EAGLE_test_repo
           git add *
-          git commit -m "Automatically generated $PROJECT_NAME palette (branch $GITHUB_REF_NAME, commit $GITHUB_SHA)"
+          git diff-index --quiet HEAD || git commit -m "Automatically generated $PROJECT_NAME palette (branch $GITHUB_REF_NAME, commit $GITHUB_SHA)"
           git push
