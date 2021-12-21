@@ -112,19 +112,12 @@ class TestMyApps(unittest.TestCase):
         l.integer = True
         l.high = 100
         l.size = 10
-<<<<<<< HEAD:tests/test_cmpts.py
-        a = InMemoryDROP("a", "a", type="array", nm="start_array")
-        p = PickOne("p", "p")
-        r = InMemoryDROP("r", "r", type="array", nm="rest_array")
-        o = InMemoryDROP("o", "o", type="scalar", nm="value")
-=======
         a = InMemoryDROP("a", "a")
         a.name = "start_array"
         p = PickOne("p", "p")
         r = InMemoryDROP("r", "r")
         r.name = "array"
         o = InMemoryDROP("o", "o")
->>>>>>> fcf289a (Increased test coverage to 100%):tests/test_components.py
 
         i.addConsumer(l)
         a.addProducer(l)
@@ -143,14 +136,9 @@ class TestMyApps(unittest.TestCase):
         """
         Testing the PickOne with wrong input type
         """
-<<<<<<< HEAD:tests/test_cmpts.py
-        a = InMemoryDROP("a", "a", type="array", nm="start_array")
-        a.write(pickle.dumps(1))  # this is scalar not array
-=======
         a = InMemoryDROP("a", "a")
         a.write(pickle.dumps(1))  # this is scalar not array
         a.name = "start_array"
->>>>>>> fcf289a (Increased test coverage to 100%):tests/test_components.py
         p = PickOne("p", "p")
 
         p.addInput(a)
@@ -172,7 +160,6 @@ class TestMyApps(unittest.TestCase):
             a.setCompleted()
         self.assertRaises(TypeError)
 
-<<<<<<< HEAD:tests/test_cmpts.py
     def test_String2JSON(self):
         """
         Testing String2JSON with correct input
@@ -211,8 +198,6 @@ class TestMyApps(unittest.TestCase):
             a.setCompleted()
         self.assertRaises(TypeError)
 
-=======
->>>>>>> fcf289a (Increased test coverage to 100%):tests/test_components.py
     def test_myData_class(self):
         """
         Dummy getIO method test for data drop
