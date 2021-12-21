@@ -112,12 +112,10 @@ class TestMyApps(unittest.TestCase):
         l.integer = True
         l.high = 100
         l.size = 10
-        a = InMemoryDROP("a", "a")
-        a.name = "start_array"
+        a = InMemoryDROP("a", "a", type="array", nm="start_array")
         p = PickOne("p", "p")
-        r = InMemoryDROP("r", "r")
-        r.name = "rest_array"
-        o = InMemoryDROP("o", "o")
+        r = InMemoryDROP("r", "r", type="array", nm="rest_array")
+        o = InMemoryDROP("o", "o", type="scalar", nm="value")
 
         i.addConsumer(l)
         a.addProducer(l)
@@ -136,9 +134,8 @@ class TestMyApps(unittest.TestCase):
         """
         Testing the PickOne with wrong input type
         """
-        a = InMemoryDROP("a", "a")
+        a = InMemoryDROP("a", "a", type="array", nm="start_array")
         a.write(pickle.dumps(1))  # this is scalar not array
-        a.name = "start_array"
         p = PickOne("p", "p")
 
         p.addInput(a)
