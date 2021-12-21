@@ -1,7 +1,7 @@
 """
 dlg_example_cmpts component module.
 
-This is the module of dlg_example_cmpts containing DALiuGE data
+This is the module of daliuge_component_examples containing DALiuGE data
 components. Here you put your main data classes and objects.
 
 Typically a component project will contain multiple components and will
@@ -23,9 +23,8 @@ logger = logging.getLogger(__name__)
 # Pythonpath to import MyApp.
 #
 # @par EAGLE_START
-# @param category DataDrop
-# @param[in] param/appclass Drop Class/daliuge_component_
-# examples.MyData/String/readonly/
+# @param category File
+# @param[in] param/appclass Drop Class/daliuge_component_examples.MyData/String/readonly/
 #     \~English Import direction for application class
 # @param[in] param/dummy Dummy parameter/ /String/readwrite/
 #     \~English Dummy modifyable parameter
