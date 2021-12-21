@@ -116,7 +116,7 @@ class TestMyApps(unittest.TestCase):
         a.name = "start_array"
         p = PickOne("p", "p")
         r = InMemoryDROP("r", "r")
-        r.name = "array"
+        r.name = "rest_array"
         o = InMemoryDROP("o", "o")
 
         i.addConsumer(l)
