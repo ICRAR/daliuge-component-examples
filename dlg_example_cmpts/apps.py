@@ -41,8 +41,7 @@ logger = logging.getLogger(__name__)
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass Application Class/
-# dlg_example_cmpts.appCmpts.MyBranch/String/readonly/
+# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.MyBranch/String/readonly/ # noqa: E501
 #     \~English Import direction for application class
 # @param[in] port/array Array/float/
 #     \~English Port receiving the input array

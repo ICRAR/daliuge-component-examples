@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 #
 # @par EAGLE_START
 # @param category File
-# @param[in] param/appclass Drop Class/daliuge_component_examples.MyData/String/readonly/
+# @param[in] param/appclass DropClass/dlg_example_cmpts.MyData/String/readonly/ # noqa: E501
 #     \~English Import direction for application class
 # @param[in] param/dummy Dummy parameter/ /String/readwrite/
 #     \~English Dummy modifyable parameter
