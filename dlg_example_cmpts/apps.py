@@ -182,12 +182,17 @@ class PickOne(BarrierAppDROP):
         # write rest to array output
         # and value to every other output
         for output in self.outputs:
+<<<<<<< HEAD:dlg_example_cmpts/apps.py
             if output.name == "rest_array":
+=======
+            if output.name == "array":
+>>>>>>> fcf289a (Increased test coverage to 100%):daliuge_component_examples/appComponents.py
                 d = pickle.dumps(self.rest)
                 output.len = len(d)
             else:
                 d = pickle.dumps(self.value)
                 output.len = len(d)
+<<<<<<< HEAD:dlg_example_cmpts/apps.py
             output.write(d)
 
     def run(self):
@@ -230,6 +235,8 @@ class String2JSON(BarrierAppDROP):
         for output in self.outputs:
             d = pickle.dumps(self.json)
             output.len = len(d)
+=======
+>>>>>>> fcf289a (Increased test coverage to 100%):daliuge_component_examples/appComponents.py
             output.write(d)
 
     def run(self):

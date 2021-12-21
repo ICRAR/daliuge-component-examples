@@ -2,7 +2,6 @@ Changelog
 =========
 
 
-<<<<<<< HEAD
 v0.1.3 (2021-12-16)
 -------------------
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
@@ -10,19 +9,6 @@ v0.1.3 (2021-12-16)
 - Fixed case where data was written as a string, not pickled. [Andreas
   Wicenec]
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
-=======
-(unreleased)
-------------
-- Better testing for array type. [Andreas Wicenec]
-
-
-v0.2.0 (2021-12-11)
--------------------
-- Release: version v0.2.0 🚀 [Andreas Wicenec]
-- Added FileGlob and PickOne components with tests. [Andreas Wicenec]
-- Better installation description. [Andreas Wicenec]
-- Fixed linting errors. [Andreas Wicenec]
->>>>>>> 6f3758c (release: version v0.2.1 🚀)
 
 
 v0.1.2 (2021-12-16)

@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 daliuge-engine >= 2.0
+=======
+daliuge - engine >= 2.0
+# daliuge-translator>=2.0
+>>>>>>> fcf289a (Increased test coverage to 100%)
