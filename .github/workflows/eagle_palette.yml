@@ -6,7 +6,7 @@ jobs:
     name: Generate EAGLE component palette
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: daliuge-component-template
+      PROJECT_NAME: daliuge-component-examples
       PROJECT_VERSION: $GITHUB_SHA
     steps:
       - name: Setup Python
