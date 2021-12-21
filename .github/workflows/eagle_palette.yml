@@ -7,15 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PROJECT_NAME: daliuge-component-examples
-      PROJECT_VERSION: $GITHUB_SHA
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install Dependencies
         run: sudo apt-get update && sudo apt-get install -y doxygen xsltproc
+      - name: Set env
+        run: |
+          echo "PROJECT_VERSION=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+          echo "GIT_REPO=$(echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY)" >> $GITHUB_ENV
       - name: Generate Palette
-        env:
-          GIT_REPO: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         run: |
           wget https://raw.githubusercontent.com/ICRAR/daliuge/master/tools/xml2palette/xml2palette.py
           python3 xml2palette.py -i ./ -o $PROJECT_NAME-$GITHUB_REF_NAME.palette
