@@ -154,6 +154,7 @@ class PickOne(BarrierAppDROP):
     """
 
     def initialize(self, **kwargs):
+        self.index = self._getArg(kwargs, "index", "*")
         BarrierAppDROP.initialize(self, **kwargs)
 
     def readData(self):
@@ -190,6 +191,61 @@ class PickOne(BarrierAppDROP):
     def run(self):
         self.readData()
         self.writeData()
+
+##
+# @brief ExtractColumn
+# @details App that extracts one column of an table-like ndarray. The array is
+# assumed to be row major, i.e. the second index refers to columns.
+# The column is # selected by index counting from 0. If the array is 1-D the 
+# result is a 1 element array. The component is passing whatever type is in 
+# the selected column.
+#
+# @par EAGLE_START
+# @param category PythonApp
+# @param/appclass Application Class/dlg_example_cmpts.apps.ExtractColumn/String/readonly/ # noqa: E501
+#     \~English Import path for application class
+# @param[in] param/index index/0/Integer/readwrite/
+#     \~English 0-base index of column to extract
+# @param[in] port/table_array table_array//array/readwrite/
+#     \~English List of elements
+# @param[out] port/column column/1Darray/
+#     \~English Port carrying the first element of input array
+#               the type is dependent on the list element type.
+# @par EAGLE_END
+class ExtractColumn(BarrierAppDROP):
+    """
+    Simple app extracting a column from a 2D ndarray.
+    """
+
+    def initialize(self, **kwargs):
+        BarrierAppDROP.initialize(self, **kwargs)
+
+    def readData(self):
+        input = self.inputs[0]
+        table_array = pickle.loads(droputils.allDropContents(input))
+
+        # make sure we always have a ndarray with 2dim.
+        if not isinstance(table_array, (np.ndarray)) or \
+            table_array.ndim != 2:
+            raise TypeError
+        self.column = table_array[:,self.index]
+
+    def writeData(self):
+        """
+        Prepare the data and write to all outputs
+        """
+        # write rest to array output
+        # and value to every other output
+        for output in self.outputs:
+            if output.name == "column":
+                d = pickle.dumps(self.column)
+                output.len = len(d)
+            output.write(d)
+
+    def run(self):
+        self.readData()
+        self.writeData()
+
 
 
 ##

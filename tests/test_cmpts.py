@@ -1,3 +1,4 @@
+from dlg import drop
 import pytest, unittest
 import os
 import pickle
@@ -11,6 +12,7 @@ from dlg_example_cmpts import (
     FileGlob,
     PickOne,
     String2JSON,
+    ExtractColumn,
 )
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import FileDROP, InMemoryDROP, NullDROP
@@ -191,6 +193,46 @@ class TestMyApps(unittest.TestCase):
 
         p.addInput(a)
         p.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
+
+    def test_ExtractColumn(self):
+        """
+        Testing ExtractColumn
+        """
+        table_array = np.arange(300).reshape(100,3)
+        column = table_array[:,1] # select 1st column
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(table_array))
+        a.name = "table_array"
+        e = ExtractColumn("e", "e")
+        e.index = 1
+        o = InMemoryDROP("o", "o")
+        o.name = "column"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        output = pickle.loads(droputils.allDropContents(o))
+        self.assertListEqual(list(column), list(output))
+
+    def test_ExtractColumn_wrongShape(self):
+        """
+        Testing ExtractColumn
+        """
+        table_array = np.arange(300)
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(table_array))
+        a.name = "table_array"
+        e = ExtractColumn("e", "e")
+        e.index = 1
+        o = InMemoryDROP("o", "o")
+        o.name = "column"
+
+        e.addInput(a)
+        e.addOutput(o)
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
         self.assertRaises(TypeError)
