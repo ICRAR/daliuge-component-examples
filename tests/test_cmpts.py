@@ -29,6 +29,7 @@ logger = logging.Logger(__name__)
 
 given = pytest.mark.parametrize
 
+
 class TestMyApps(unittest.TestCase):
     def _runBranchTest(self, arrayDROP):
         """
@@ -243,7 +244,7 @@ class TestMyApps(unittest.TestCase):
         """
         Testing AdvUrlRetrieve
         """
-        testContent = {"args":{"daliuge": "great"}}
+        testContent = {"args": {"daliuge": "great"}}
         testUrl = "https://httpbin.org/get?daliuge=%i0"
         testPart = "great"
         a = InMemoryDROP("a", "a")
@@ -265,7 +266,7 @@ class TestMyApps(unittest.TestCase):
         """
         Testing AdvUrlRetrieve with wrong URL
         """
-        testContent = {"args":{"daliuge": "great"}}
+        testContent = {"args": {"daliuge": "great"}}
         testUrl = "https://dummy/get?daliuge=%i0"
         testPart = "great"
         a = InMemoryDROP("a", "a")
@@ -286,7 +287,7 @@ class TestMyApps(unittest.TestCase):
         """
         Testing AdvUrlRetrieve with invalid URL
         """
-        testContent = {"args":{"daliuge": "great"}}
+        testContent = {"args": {"daliuge": "great"}}
         testUrl = "https://dummy\ get?daliuge=%i0"
         testPart = "great"
         a = InMemoryDROP("a", "a")
@@ -309,7 +310,7 @@ class TestMyApps(unittest.TestCase):
         """
         Testing AdvUrlRetrieve without output
         """
-        testContent = {"args":{"daliuge": "great"}}
+        testContent = {"args": {"daliuge": "great"}}
         testUrl = "https://httpbin.org/get?daliuge=%i0"
         testPart = "great"
         a = InMemoryDROP("a", "a")
@@ -326,15 +327,14 @@ class TestMyApps(unittest.TestCase):
             a.setCompleted()
         # content = json.loads(pickle.loads(droputils.allDropContents(a)))
         # self.assertEqual(content["args"], testContent["args"])
-        with self.assertRaisesRegex(Exception,
-            "At least one output required"):
-                raise Exception("At least one output required")
+        with self.assertRaisesRegex(Exception, "At least one output required"):
+            raise Exception("At least one output required")
 
     def test_AdvUrlRetrieve_wrongType(self):
         """
         Testing AdvUrlRetrieve with malicious type
         """
-        testContent = {"args":{"daliuge": "great"}}
+        testContent = {"args": {"daliuge": "great"}}
         testUrl = "https://httpbin.org/get?daliuge=%i0"
         testPart = b"0123456"
         a = InMemoryDROP("a", "a")

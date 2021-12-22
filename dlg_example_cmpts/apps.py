@@ -17,7 +17,6 @@ import logging
 import pickle
 import urllib
 from glob import glob
-from urllib.parse import urlparse
 
 import numpy as np
 from dlg import droputils
@@ -313,9 +312,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
         """
         outs = self.outputs
         if len(outs) < 1:
-            raise Exception(
-                "At least one output required for %r" % self
-            )
+            raise Exception("At least one output required for %r" % self)
         for output in outs:
             if output.name == "content":
                 d = pickle.dumps(self.content)
