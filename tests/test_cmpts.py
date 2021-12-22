@@ -201,8 +201,8 @@ class TestMyApps(unittest.TestCase):
         """
         Testing ExtractColumn
         """
-        table_array = np.arange(300).reshape(100,3)
-        column = table_array[:,1] # select 1st column
+        table_array = np.arange(300).reshape(100, 3)
+        column = table_array[:, 1]  # select 1st column
         a = InMemoryDROP("a", "a")
         a.write(pickle.dumps(table_array))
         a.name = "table_array"

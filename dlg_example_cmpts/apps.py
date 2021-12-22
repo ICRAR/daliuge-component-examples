@@ -192,12 +192,13 @@ class PickOne(BarrierAppDROP):
         self.readData()
         self.writeData()
 
+
 ##
 # @brief ExtractColumn
 # @details App that extracts one column of an table-like ndarray. The array is
 # assumed to be row major, i.e. the second index refers to columns.
-# The column is # selected by index counting from 0. If the array is 1-D the 
-# result is a 1 element array. The component is passing whatever type is in 
+# The column is # selected by index counting from 0. If the array is 1-D the
+# result is a 1 element array. The component is passing whatever type is in
 # the selected column.
 #
 # @par EAGLE_START
@@ -225,10 +226,9 @@ class ExtractColumn(BarrierAppDROP):
         table_array = pickle.loads(droputils.allDropContents(input))
 
         # make sure we always have a ndarray with 2dim.
-        if not isinstance(table_array, (np.ndarray)) or \
-            table_array.ndim != 2:
+        if not isinstance(table_array, (np.ndarray)) or table_array.ndim != 2:
             raise TypeError
-        self.column = table_array[:,self.index]
+        self.column = table_array[:, self.index]
 
     def writeData(self):
         """
@@ -245,7 +245,6 @@ class ExtractColumn(BarrierAppDROP):
     def run(self):
         self.readData()
         self.writeData()
-
 
 
 ##
