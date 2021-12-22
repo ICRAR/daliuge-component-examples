@@ -2,6 +2,38 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Fixed linting errors. [Andreas Wicenec]
+- Added AdvUrlRetrieve component and tests. [Andreas Wicenec]
+- Fixed linting errors. [Andreas Wicenec]
+- Added ExtractColumn component. [Andreas Wicenec]
+- Typo in doxygen. [Andreas Wicenec]
+- Fixed appclass doxygen strings. [Andreas Wicenec]
+- Ignore long line in doxygen for lint. [Andreas Wicenec]
+- Fixed requirements-test and requirements. [Andreas Wicenec]
+- Adjusted test. [Andreas Wicenec]
+- Another merge attempt. [Andreas Wicenec]
+- Release: version v0.1.1 🚀 [Andreas Wicenec]
+- Djusted test_cmpts. [Andreas Wicenec]
+- Increased test coverage to 100% [Andreas Wicenec]
+- Release: version v0.2.1 🚀 [Andreas Wicenec]
+- Added FileGlob and PickOne components with tests. [Andreas Wicenec]
+- Debugging of environment variables. [james-strauss-uwa]
+- Debugging of environment variables. [james-strauss-uwa]
+- Added palette action. [Andreas Wicenec]
+- Added .vscode to gitigonre. [Andreas Wicenec]
+- Removed pandas from requirements. [Andreas Wicenec]
+- Data component type change. [Andreas Wicenec]
+- Removed main. [Andreas Wicenec]
+- Reverted Pandas changes. [Andreas Wicenec]
+
+
+v0.1.4 (2021-12-16)
+-------------------
+- Release: version v0.1.4 🚀 [Andreas Wicenec]
+
+
 v0.1.3 (2021-12-16)
 -------------------
 - Release: version v0.1.3 🚀 [Andreas Wicenec]
