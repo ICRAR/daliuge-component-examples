@@ -15,7 +15,9 @@ __version__ = "0.1.0"
 import json
 import logging
 import pickle
+import urllib
 from glob import glob
+from urllib.parse import urlparse
 
 import numpy as np
 from dlg import droputils
@@ -239,6 +241,84 @@ class ExtractColumn(BarrierAppDROP):
         for output in self.outputs:
             if output.name == "column":
                 d = pickle.dumps(self.column)
+                output.len = len(d)
+            output.write(d)
+
+    def run(self):
+        self.readData()
+        self.writeData()
+
+
+##
+# @brief AdvUrlRetrieve
+# @details An APP that retrieves the content of a URL and writes
+# it to all outputs. The URL can be specified either completely or
+# partially through the inputs. In that case the urlTempl parameter can
+# use placeholders to construct the final URL.
+# @par EAGLE_START
+# @param category PythonApp
+# @param[in] param/urlTempl URL Template/"https://eagle.icrar.org"/String/readwrite/ # noqa: E501
+#     \~English The URL to retrieve
+# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.AdvUrlRetrieve/String/readonly/ # noqa: E501
+#     \~English Application class
+# @param[in] port/urlPart URL Part/String/
+#     \~English The port carrying the content read from the URL.
+# @param[out] port/content Content/String/
+#     \~English The port carrying the content read from the URL.
+# @par EAGLE_END
+class AdvUrlRetrieve(BarrierAppDROP):
+    """
+    An App that retrieves the content of a URL and allows to construct the URL
+    through input placeholders.
+
+    Keywords:
+    URL:   string, URL to retrieve.
+    """
+
+    def initialize(self, **kwargs):
+        self.urlTempl = self._getArg(kwargs, "urlTempl", "")
+        BarrierAppDROP.initialize(self, **kwargs)
+
+    def constructUrl(self):
+        url = self.urlTempl
+        # this will ignore inputs not referenced in template
+        for x, v in enumerate(self.urlParts):
+            pathRef = "%%i%d" % (x,)
+            if pathRef in url:
+                url = url.replace(pathRef, v)
+        logger.info(f"Constructed URL: {url}")
+        return url
+
+    def readData(self):
+        # for this app we are expecting URL fractions on the inputs
+        urlParts = []
+        for input in self.inputs:
+            part = pickle.loads(droputils.allDropContents(input))
+            # make sure the placeholders are strings
+            if not isinstance(part, str):
+                raise TypeError
+            urlParts.append(part)
+        self.urlParts = urlParts
+        self.url = self.constructUrl()
+        try:
+            u = urllib.request.urlopen(self.url)
+        except Exception as e:
+            raise e
+        # finally read the content of the URL
+        self.content = u.read()
+
+    def writeData(self):
+        """
+        Prepare the data and write to all outputs
+        """
+        outs = self.outputs
+        if len(outs) < 1:
+            raise Exception(
+                "At least one output required for %r" % self
+            )
+        for output in outs:
+            if output.name == "content":
+                d = pickle.dumps(self.content)
                 output.len = len(d)
             output.write(d)
 

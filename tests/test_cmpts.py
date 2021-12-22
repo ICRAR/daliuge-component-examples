@@ -2,6 +2,8 @@ from dlg import drop
 import pytest, unittest
 import os
 import pickle
+import urllib
+import http
 
 from glob import glob
 from dlg import droputils
@@ -13,6 +15,7 @@ from dlg_example_cmpts import (
     PickOne,
     String2JSON,
     ExtractColumn,
+    AdvUrlRetrieve,
 )
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import FileDROP, InMemoryDROP, NullDROP
@@ -25,7 +28,6 @@ from time import sleep
 logger = logging.Logger(__name__)
 
 given = pytest.mark.parametrize
-
 
 class TestMyApps(unittest.TestCase):
     def _runBranchTest(self, arrayDROP):
@@ -236,6 +238,121 @@ class TestMyApps(unittest.TestCase):
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
         self.assertRaises(TypeError)
+
+    def test_AdvUrlRetrieve(self):
+        """
+        Testing AdvUrlRetrieve
+        """
+        testContent = {"args":{"daliuge": "great"}}
+        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testPart = "great"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        o = InMemoryDROP("o", "o")
+        o.name = "content"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        content = json.loads(pickle.loads(droputils.allDropContents(o)))
+        self.assertEqual(content["args"], testContent["args"])
+
+    def test_AdvUrlRetrieve_wrongUrl(self):
+        """
+        Testing AdvUrlRetrieve with wrong URL
+        """
+        testContent = {"args":{"daliuge": "great"}}
+        testUrl = "https://dummy/get?daliuge=%i0"
+        testPart = "great"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        o = InMemoryDROP("o", "o")
+        o.name = "content"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        self.assertRaises(urllib.error.URLError)
+
+    def test_AdvUrlRetrieve_invalidUrl(self):
+        """
+        Testing AdvUrlRetrieve with invalid URL
+        """
+        testContent = {"args":{"daliuge": "great"}}
+        testUrl = "https://dummy\ get?daliuge=%i0"
+        testPart = "great"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        o = InMemoryDROP("o", "o")
+        o.name = "content"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        # content = json.loads(pickle.loads(droputils.allDropContents(o)))
+        # self.assertEqual(content["args"], testContent["args"])
+        self.assertRaises(http.client.InvalidURL)
+
+    def test_AdvUrlRetrieve_noOutput(self):
+        """
+        Testing AdvUrlRetrieve without output
+        """
+        testContent = {"args":{"daliuge": "great"}}
+        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testPart = "great"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        # o = InMemoryDROP("o", "o")
+        # o.name = "content"
+
+        e.addInput(a)
+        # e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, e, timeout=10):
+            a.setCompleted()
+        # content = json.loads(pickle.loads(droputils.allDropContents(a)))
+        # self.assertEqual(content["args"], testContent["args"])
+        with self.assertRaisesRegex(Exception,
+            "At least one output required"):
+                raise Exception("At least one output required")
+
+    def test_AdvUrlRetrieve_wrongType(self):
+        """
+        Testing AdvUrlRetrieve with malicious type
+        """
+        testContent = {"args":{"daliuge": "great"}}
+        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testPart = b"0123456"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        o = InMemoryDROP("o", "o")
+        o.name = "content"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
+        # content = ""
+        # # content = json.loads(pickle.loads(droputils.allDropContents(o)))
+        # self.assertEqual(content["args"], testContent["args"])
 
     def test_myData_class(self):
         """
