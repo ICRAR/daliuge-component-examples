@@ -140,7 +140,7 @@ class FileGlob(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# param/appclass Application Class/dlg_example_cmpts.apps.PickOne/String/readonly/ # noqa: E501
+# @param/appclass Application Class/dlg_example_cmpts.apps.PickOne/String/readonly/ # noqa: E501
 #     \~English Import path for application class
 # @param[in] port/rest_array rest_array//array/readwrite/
 #     \~English List of elements
@@ -198,7 +198,7 @@ class PickOne(BarrierAppDROP):
 # to convert that to JSON
 # @par EAGLE_START
 # @param category PythonApp
-# param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
+# @param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
 #     \~English Import path for application class
 # @param[in] port/string string//string/readwrite/
 #     \~English String to be converted
