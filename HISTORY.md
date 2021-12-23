@@ -4,6 +4,14 @@ Changelog
 
 (unreleased)
 ------------
+- Added GenericGather and associated test. [Andreas Wicenec]
+- Updated fmt. [Andreas Wicenec]
+- Added check and test for wrong output drop name. [Andreas Wicenec]
+
+
+v0.1.5 (2021-12-22)
+-------------------
+- Release: version v0.1.5 🚀 [Andreas Wicenec]
 - Fixed linting errors. [Andreas Wicenec]
 - Added AdvUrlRetrieve component and tests. [Andreas Wicenec]
 - Fixed linting errors. [Andreas Wicenec]
