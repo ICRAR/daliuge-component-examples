@@ -16,6 +16,7 @@ from dlg_example_cmpts import (
     String2JSON,
     ExtractColumn,
     AdvUrlRetrieve,
+    GenericGather,
 )
 from dlg.apps.simple import RandomArrayApp
 from dlg.drop import FileDROP, InMemoryDROP, NullDROP
@@ -371,6 +372,25 @@ class TestMyApps(unittest.TestCase):
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
         self.assertRaises(TypeError)
+
+    def test_GenericGather(self):
+        """
+        Testing the simple GenericGather app
+        """
+        a = InMemoryDROP("a", "a")
+        b = InMemoryDROP("b", "b")
+        o = InMemoryDROP("o", "o")
+        g = GenericGather("g", "g")
+        a.write((b"a" * 10))
+        b.write((b"b" * 10))
+        g.addInput(a)
+        g.addInput(b)
+        g.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+            b.setCompleted()
+        content = content = droputils.allDropContents(o)
+        self.assertEqual(content, ("a" * 10 + "b" * 10).encode())
 
     def test_myData_class(self):
         """

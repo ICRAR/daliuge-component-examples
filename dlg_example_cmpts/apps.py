@@ -373,3 +373,37 @@ class String2JSON(BarrierAppDROP):
     def run(self):
         self.readData()
         self.writeData()
+
+
+##
+# @brief GenericGather
+# @details App that reads all its inputs and simply writes them in
+# concatenated to all its outputs. This can be used stand-alone or
+# as part of a Gather. It does not do anything to the data, just
+# passing it on.
+#
+# @par EAGLE_START
+# @param category PythonApp
+# @param/appclass Application Class/dlg_example_cmpts.apps.GenericGather/String/readonly/ # noqa: E501
+#     \~English Import path for application class
+# @param[in] port/input input/complex/readwrite/
+#     \~English 0-base placeholder port for inputs
+# @param[out] port/output output/complex/
+#     \~English Placeholder port for outputs
+# @par EAGLE_END
+class GenericGather(BarrierAppDROP):
+    def initialize(self, **kwargs):
+        BarrierAppDROP.initialize(self, **kwargs)
+
+    def readWriteData(self):
+
+        inputs = self.inputs
+        outputs = self.outputs
+        for output in outputs:
+            for input in inputs:
+                d = droputils.allDropContents(input)
+                output.len = len(d)
+                output.write(d)
+
+    def run(self):
+        self.readWriteData()

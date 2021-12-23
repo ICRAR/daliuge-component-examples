@@ -5,6 +5,7 @@ from .apps import (
     AdvUrlRetrieve,
     ExtractColumn,
     FileGlob,
+    GenericGather,
     MyBranch,
     PickOne,
     String2JSON,
@@ -19,4 +20,5 @@ __all__ = [
     "String2JSON",
     "ExtractColumn",
     "AdvUrlRetrieve",
+    "GenericGather",
 ]
