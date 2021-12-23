@@ -259,7 +259,7 @@ class TestMyApps(unittest.TestCase):
         e.addOutput(o)
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
-        content = json.loads(pickle.loads(droputils.allDropContents(o)))
+        content = json.loads(droputils.allDropContents(o))
         self.assertEqual(content["args"], testContent["args"])
 
     def test_AdvUrlRetrieve_wrongUrl(self):
@@ -350,9 +350,27 @@ class TestMyApps(unittest.TestCase):
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
         self.assertRaises(TypeError)
-        # content = ""
-        # # content = json.loads(pickle.loads(droputils.allDropContents(o)))
-        # self.assertEqual(content["args"], testContent["args"])
+
+    def test_AdvUrlRetrieve_wrongOutput(self):
+        """
+        Testing AdvUrlRetrieve with wrong output name
+        """
+        testContent = {"args": {"daliuge": "great"}}
+        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testPart = "great"
+        a = InMemoryDROP("a", "a")
+        a.write(pickle.dumps(testPart))
+        a.name = "partUrl"
+        e = AdvUrlRetrieve("e", "e")
+        e.urlTempl = testUrl
+        o = InMemoryDROP("o", "o")
+        o.name = "wrongName"
+
+        e.addInput(a)
+        e.addOutput(o)
+        with droputils.DROPWaiterCtx(self, o, timeout=10):
+            a.setCompleted()
+        self.assertRaises(TypeError)
 
     def test_myData_class(self):
         """

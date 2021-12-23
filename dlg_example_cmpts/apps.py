@@ -155,7 +155,6 @@ class PickOne(BarrierAppDROP):
     """
 
     def initialize(self, **kwargs):
-        self.index = self._getArg(kwargs, "index", "*")
         BarrierAppDROP.initialize(self, **kwargs)
 
     def readData(self):
@@ -220,6 +219,7 @@ class ExtractColumn(BarrierAppDROP):
     """
 
     def initialize(self, **kwargs):
+        self.index = self._getArg(kwargs, "index", 0)
         BarrierAppDROP.initialize(self, **kwargs)
 
     def readData(self):
@@ -294,6 +294,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
         for input in self.inputs:
             part = pickle.loads(droputils.allDropContents(input))
             # make sure the placeholders are strings
+            logger.info(f"URL part: {part}")
             if not isinstance(part, str):
                 raise TypeError
             urlParts.append(part)
@@ -311,13 +312,20 @@ class AdvUrlRetrieve(BarrierAppDROP):
         Prepare the data and write to all outputs
         """
         outs = self.outputs
+        written = False
         if len(outs) < 1:
             raise Exception("At least one output required for %r" % self)
         for output in outs:
-            if output.name == "content":
-                d = pickle.dumps(self.content)
-                output.len = len(d)
-            output.write(d)
+            if output.name.lower() == "content":
+                # we are not pickling here, but just pass on the data.
+                output.len = len(self.content)
+                output.write(self.content)
+                written = True
+            else:
+                logger.warning(f"Output with name {output.name} ignored!")
+         
+        if not written: raise TypeError("No matching output drop found." + 
+            "Nothing written")
 
     def run(self):
         self.readData()
