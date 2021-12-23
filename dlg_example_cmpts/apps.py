@@ -323,9 +323,11 @@ class AdvUrlRetrieve(BarrierAppDROP):
                 written = True
             else:
                 logger.warning(f"Output with name {output.name} ignored!")
-         
-        if not written: raise TypeError("No matching output drop found." + 
-            "Nothing written")
+
+        if not written:
+            raise TypeError(
+                "No matching output drop found." + "Nothing written"
+            )
 
     def run(self):
         self.readData()
