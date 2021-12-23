@@ -399,10 +399,13 @@ class GenericGather(BarrierAppDROP):
 
         inputs = self.inputs
         outputs = self.outputs
+        total_len = 0
+        for input in inputs:
+            total_len += input.len
         for output in outputs:
+            output.len = total_len
             for input in inputs:
                 d = droputils.allDropContents(input)
-                output.len = len(d)
                 output.write(d)
 
     def run(self):

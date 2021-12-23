@@ -382,7 +382,9 @@ class TestMyApps(unittest.TestCase):
         o = InMemoryDROP("o", "o")
         g = GenericGather("g", "g")
         a.write((b"a" * 10))
+        a.len = 10
         b.write((b"b" * 10))
+        b.len = 10
         g.addInput(a)
         g.addInput(b)
         g.addOutput(o)
