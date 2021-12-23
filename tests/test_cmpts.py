@@ -390,7 +390,7 @@ class TestMyApps(unittest.TestCase):
             a.setCompleted()
             b.setCompleted()
         content = content = droputils.allDropContents(o)
-        self.assertEqual(content, ("a" * 10 + "b" * 10).encode())
+        self.assertEqual(content, b"a" * 10 + b"b" * 10)
 
     def test_myData_class(self):
         """
