@@ -9,7 +9,7 @@ from glob import glob
 from dlg import droputils
 
 from dlg_example_cmpts import (
-    MyBranch,
+    LengthCheck,
     MyDataDROP,
     FileGlob,
     PickOne,
@@ -26,6 +26,8 @@ import json
 import numpy as np
 from time import sleep
 
+from dlg_example_cmpts.apps import LengthCheck
+
 logger = logging.Logger(__name__)
 
 given = pytest.mark.parametrize
@@ -38,7 +40,7 @@ class TestMyApps(unittest.TestCase):
         """
         i = NullDROP("i", "i")  # just to be able to start the execution
         m = InMemoryDROP("m", "m")  # the receiving drop
-        b = MyBranch("b", "b")  # the branch drop
+        b = LengthCheck("b", "b")  # the branch drop
         n = InMemoryDROP("n", "n")  # the memory drop for the NO branch
         y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
 
@@ -55,42 +57,53 @@ class TestMyApps(unittest.TestCase):
         # read the array back from the intermediate memory drop
         data = pickle.loads(droputils.allDropContents(m))
         # calculate the mean
-        mean = np.mean(data)
+        length = len(data)
 
         # check which branch should have been taken
-        t = [y if mean < 0.5 else n][0]
+        t = [n if length < 1 else y][0]
         while t.status < 2:
             # make sure the graph has reached this point
             # status == 2 is COMPLETED, anything above is not expected
             sleep(0.001)
         # load the mean from the correct branch memory drop
-        res = pickle.loads(droputils.allDropContents(t))
+        res = len(pickle.loads(droputils.allDropContents(t)))
         # and check whether it is the same as the calculated one
-        return (t.oid, res, mean)
+        return (t.oid, res, length)
 
-    def test_myBranch_class(self):
+    def test_LengthCheck_class(self):
         """
-        Test creates two random arrays in memory drops, one with a
-        mean below and the other above 0.5. It runs two graphs against
-        each of the arrays drops and checks whether the branch is
-        traversed on the correct side. It also checks whether the
-        derived values are correct.
+        Test creates two random arrays in memory drops, one with zero length,
+        the other with 100. It runs two graphs against
+        each of the arrays and checks whether the branch is
+        traversed on the correct side.
         """
-        # create and configure the creation of the random array.
+        # check zero size
         l = RandomArrayApp("l", "l")
         l.integer = False
-        l.high = 0.5
-        (oid, resLow, meanLow) = self._runBranchTest(l)
-        self.assertEqual(oid, "y")
-        self.assertEqual(resLow, meanLow)
+        l.size = 0
+        (oid, check, length) = self._runBranchTest(l)
+        self.assertEqual(oid, "n")
+        self.assertEqual(check, length)
 
+        # check wrong type
+        w = InMemoryDROP("w", "w")
+        w.write(pickle.dumps(b"abcdef"))
+        l = LengthCheck("l", "l")
+        w.addConsumer(l)
+        y = InMemoryDROP("y", "y")
+        n = InMemoryDROP("n", "n")
+        l.addOutput(y)
+        l.addOutput(n)
+        with droputils.DROPWaiterCtx(self, l, timeout=10):
+            w.setCompleted()
+        self.assertRaises(TypeError)
+
+        # check > 0 size
         h = RandomArrayApp("h", "h")
         h.integer = False
-        h.low = 0.5
-        h.high = 1
-        (oid, resHigh, meanHigh) = self._runBranchTest(h)
-        self.assertEqual(oid, "n")
-        self.assertEqual(resHigh, meanHigh)
+        (oid, check, length) = self._runBranchTest(h)
+        self.assertEqual(oid, "y")
+        self.assertEqual(check, length)
 
     def test_FileGlob_class(self):
         """
