@@ -6,6 +6,7 @@ from .apps import (
     ExtractColumn,
     FileGlob,
     GenericGather,
+    MyBranch,
     LengthCheck,
     PickOne,
     String2JSON,
@@ -13,6 +14,7 @@ from .apps import (
 from .data import MyDataDROP
 
 __all__ = [
+    "MyBranch",
     "LengthCheck",
     "MyDataDROP",
     "FileGlob",
