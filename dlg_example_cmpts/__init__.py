@@ -6,8 +6,8 @@ from .apps import (
     ExtractColumn,
     FileGlob,
     GenericGather,
-    MyBranch,
     LengthCheck,
+    MyBranch,
     PickOne,
     String2JSON,
 )

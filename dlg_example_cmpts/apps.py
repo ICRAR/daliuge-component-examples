@@ -88,12 +88,13 @@ class MyBranch(BranchAppDrop):
         self.writeData()
         return result
 
+
 ##
 # @brief LengthCheck
 #
 # This branch returns true if the length of the input array is > 0. It also
 # passes the array on to the output ports (will be an empty array in the case
-# of N).
+# of N==0).
 #
 # @par EAGLE_START
 # @param category PythonApp
@@ -110,7 +111,6 @@ class MyBranch(BranchAppDrop):
 
 class LengthCheck(BranchAppDrop):
     def initialize(self, **kwargs):
-        self.value = None
         BranchAppDrop.initialize(self, **kwargs)
 
     def readData(self):
@@ -121,24 +121,23 @@ class LengthCheck(BranchAppDrop):
         self.raw = droputils.allDropContents(input)
         data = pickle.loads(self.raw)
         # make sure we always have a ndarray with at least 1dim.
-        if type(data) not in (list, tuple) and not isinstance(
-            data, (np.ndarray)
+        if not isinstance(data, np.ndarray) and type(data) not in (
+            list,
+            tuple,
         ):
             raise TypeError
-        if isinstance(data, np.ndarray) and data.ndim == 0:
+        elif isinstance(data, np.ndarray) and data.size == 0:
             # if it is a scalar np.array (strange...)
-            data = data.reshape((1))
-        else:
-            data = np.array(data)
-            self.raw = pickle.dumps(data)  # replace with np-array
-        self.value = len(data)
+            data = np.array([data])
+            self.raw = pickle.dumps(data)
+        self.value = data.size
 
     def writeData(self):
         """
         Write unmodified data to port (self.ind) identified by condition.
         """
         output = self.outputs[self.ind]
-        output.len = len(self.raw)
+        output.len = self.value
         output.write(self.raw)
 
     def condition(self):
@@ -157,8 +156,6 @@ class LengthCheck(BranchAppDrop):
 
     def run(self):
         self.readData()
-        # self.condition()
-
 
 ##
 # @brief FileGlob
@@ -413,7 +410,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
 # @param category PythonApp
 # @param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
 #     \~English Import path for application class
-# @param[in] port/string string//string/readwrite/
+# @param[in] port/string string/string/readwrite/
 #     \~English String to be converted
 # @param[out] port/element element/complex/
 #     \~English Port carrying the JSON structure
