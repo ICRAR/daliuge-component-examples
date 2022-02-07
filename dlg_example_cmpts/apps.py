@@ -14,6 +14,7 @@ Be creative! do whatever you need to do!
 __version__ = "0.1.0"
 import json
 import logging
+import os
 import pickle
 import urllib
 from glob import glob
@@ -205,7 +206,8 @@ class FileGlob(BarrierAppDROP):
 
     def run(self):
         filetmpl = f"{self.filepath}/{self.wildcard}"
-        self.value = glob(filetmpl)
+        files = glob(filetmpl)
+        self.value = [f for f in files if os.path.isfile(f)]
         self.writeData()
 
 
