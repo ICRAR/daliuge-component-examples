@@ -90,6 +90,74 @@ class MyBranch(BranchAppDrop):
 
 
 ##
+# @brief LengthCheck
+#
+# This branch returns true if the length of the input array is > 0. It also
+# passes the array on to the output ports (will be an empty array in the case
+# of N==0).
+#
+# @par EAGLE_START
+# @param category PythonApp
+# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.LengthCheck/String/readonly/ # noqa: E501
+#     \~English Import direction for application class
+# @param[in] port/array Array/float/
+#     \~English Port receiving the input array
+# @param[out] port/Y Y/float/
+#     \~English Port carrying the array if Y.
+# @param[out] port/N N/float/
+#     \~English Port carrying an empty array (N)
+# @par EAGLE_END
+
+
+class LengthCheck(BranchAppDrop):
+    def initialize(self, **kwargs):
+        BranchAppDrop.initialize(self, **kwargs)
+
+    def readData(self):
+        """
+        Just reading the input array and calculating the mean.
+        """
+        input = self.inputs[0]
+        self.raw = droputils.allDropContents(input)
+        data = pickle.loads(self.raw)
+        # make sure we always have a ndarray with at least 1dim.
+        if not isinstance(data, np.ndarray) and type(data) not in (
+            list,
+            tuple,
+        ):
+            raise TypeError
+        elif isinstance(data, np.ndarray) and data.size == 0:
+            # if it is a scalar np.array (strange...)
+            data = np.array([data])
+            self.raw = pickle.dumps(data)
+        self.value = data.size
+
+    def writeData(self):
+        """
+        Write unmodified data to port (self.ind) identified by condition.
+        """
+        output = self.outputs[self.ind]
+        output.len = self.value
+        output.write(self.raw)
+
+    def condition(self):
+        """
+        Check value, call write method and return boolean.
+        """
+        self.readData()
+        if self.value > 0:
+            self.ind = 0
+            result = True
+        else:
+            self.ind = 1
+            result = False
+        self.writeData()
+        return result
+
+    def run(self):
+        self.readData()
+
+##
 # @brief FileGlob
 # @details An App that uses glob to find all files matching a
 # template given by a filepath and a wildcard string
@@ -342,7 +410,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
 # @param category PythonApp
 # @param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
 #     \~English Import path for application class
-# @param[in] port/string string//string/readwrite/
+# @param[in] port/string string/string/readwrite/
 #     \~English String to be converted
 # @param[out] port/element element/complex/
 #     \~English Port carrying the JSON structure

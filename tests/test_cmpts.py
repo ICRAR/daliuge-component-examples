@@ -10,6 +10,7 @@ from dlg import droputils
 
 from dlg_example_cmpts import (
     MyBranch,
+    LengthCheck,
     MyDataDROP,
     FileGlob,
     PickOne,
@@ -92,6 +93,99 @@ class TestMyApps(unittest.TestCase):
         self.assertEqual(oid, "n")
         self.assertEqual(resHigh, meanHigh)
 
+    def _runLengthTest(self, arrayDROP):
+        """
+        Execute the actual test given the arrayDROP on input
+        """
+        b = LengthCheck("b", "b")  # the branch drop
+        n = InMemoryDROP("n", "n")  # the memory drop for the NO branch
+        y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
+        if not isinstance(arrayDROP, InMemoryDROP):
+            startDrop = NullDROP(
+                "i", "i"
+            )  # just to be able to start the execution
+            m = InMemoryDROP("m", "m")  # the receiving drop
+            startDrop.addConsumer(arrayDROP)
+            m.addProducer(arrayDROP)
+            m.addConsumer(b)
+        else:
+            startDrop = m = arrayDROP
+            startDrop.addConsumer(b)
+
+        # connect the Y and N nodes
+        b.addOutput(y)
+        b.addOutput(n)
+        # start the graph
+        with droputils.DROPWaiterCtx(self, b, timeout=30):
+            startDrop.setCompleted()
+        # read the array back from the intermediate memory drop
+        data = pickle.loads(droputils.allDropContents(m))
+        # calculate the length
+        if isinstance(data, np.ndarray):
+            length = data.size
+            t = [n if length < 1 else y][0]
+            while t.status < 2:
+                # make sure the graph has reached this point
+                # status == 2 is COMPLETED, anything above is not expected
+                sleep(0.001)
+            # load the mean from the correct branch memory drop
+            dummy = pickle.loads(droputils.allDropContents(t))
+            res = dummy.size
+            # and check whether it is the same as the calculated one
+            return (t.oid, res, length)
+        else:
+            length = None
+            return (None, None, None)
+
+    def test_LengthCheck_class(self):
+        """
+        Test creates two random arrays in memory drops, one with zero length,
+        the other with 100. It runs two graphs against
+        each of the arrays and checks whether the branch is
+        traversed on the correct side.
+        """
+        # check > 0 size (default == 100)
+        h = RandomArrayApp("h", "h")
+        h.integer = False
+        (oid, check, length) = self._runLengthTest(h)
+        self.assertEqual(oid, "y")
+        self.assertEqual(check, length)
+
+    def test_LengthCheck_class_zero(self):
+        """
+        Test creates a zero length array and checks whether the branch is
+        traversed on the correct side.
+        """
+
+        # check zero size
+        l = RandomArrayApp("l", "l")
+        l.integer = False
+        l.size = 0
+        (oid, check, length) = self._runLengthTest(l)
+        self.assertEqual(oid, "n")
+        self.assertEqual(check, length)
+
+    def test_LengthCheck_wrongType(self):
+        # check wrong type
+        w = InMemoryDROP("w", "w")
+        b = LengthCheck("b", "b")  # the branch drop
+        n = InMemoryDROP("n", "n")  # the memory drop for the NO branch
+        y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
+        w.addConsumer(b)
+        n.addProducer(b)
+        y.addProducer(b)
+        w.write(pickle.dumps(b"abcdef"))
+        with droputils.DROPWaiterCtx(self, b, timeout=10):
+            w.setCompleted()
+        self.assertRaises(TypeError, b.readData)
+
+    def test_LengthCheck_scalar(self):
+        # check array scalar
+        w = InMemoryDROP("w", "w")
+        w.write(pickle.dumps(np.array(1)))
+        (oid, check, length) = self._runLengthTest(w)
+        self.assertEqual(check, length)
+
     def test_FileGlob_class(self):
         """
         Testing the globbing method finding *this* file
@@ -143,11 +237,10 @@ class TestMyApps(unittest.TestCase):
         a = InMemoryDROP("a", "a", type="array", nm="start_array")
         a.write(pickle.dumps(1))  # this is scalar not array
         p = PickOne("p", "p")
-
-        p.addInput(a)
-        with droputils.DROPWaiterCtx(self, p, timeout=10):
+        a.addConsumer(p)
+        with self.assertRaises(TypeError):
             a.setCompleted()
-        self.assertRaises(TypeError)
+            p.readData()
 
     def test_PickOne_0dim(self):
         """
