@@ -115,21 +115,28 @@ class LengthCheck(BranchAppDrop):
 
     def readData(self):
         """
-        Just reading the input array and calculating the mean.
+        Just reading the inoput array and determining the size
         """
         input = self.inputs[0]
         self.raw = droputils.allDropContents(input)
         data = pickle.loads(self.raw)
         # make sure we always have a ndarray with at least 1dim.
-        if not isinstance(data, np.ndarray) and type(data) not in (
+        if isinstance(data, np.ndarray):
+            # that's what we want..
+            if data.size == 0:
+                # fix this strange case
+                data = np.array([data])
+                self.raw = pickle.dumps(data)
+        elif not isinstance(data, np.ndarray) and type(data) not in (
             list,
             tuple,
         ):
             raise TypeError
-        elif isinstance(data, np.ndarray) and data.size == 0:
-            # if it is a scalar np.array (strange...)
-            data = np.array([data])
+        else:
+            # can only be list or tuple. convert those.
+            data = np.array(data)
             self.raw = pickle.dumps(data)
+
         self.value = data.size
 
     def writeData(self):
@@ -156,6 +163,7 @@ class LengthCheck(BranchAppDrop):
 
     def run(self):
         self.readData()
+
 
 ##
 # @brief FileGlob
@@ -239,7 +247,7 @@ class PickOne(BarrierAppDROP):
         else:
             data = np.array(data)
         self.value = data[0] if len(data) else None
-        self.rest = data[1:] if len(data) > 1 else []
+        self.rest = data[1:] if len(data) > 1 else np.array([])
 
     def writeData(self):
         """

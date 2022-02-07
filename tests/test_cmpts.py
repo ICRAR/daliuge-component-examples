@@ -121,6 +121,8 @@ class TestMyApps(unittest.TestCase):
         # read the array back from the intermediate memory drop
         data = pickle.loads(droputils.allDropContents(m))
         # calculate the length
+        if isinstance(data, list):
+            data = np.array(data)
         if isinstance(data, np.ndarray):
             length = data.size
             t = [n if length < 1 else y][0]
@@ -147,6 +149,20 @@ class TestMyApps(unittest.TestCase):
         # check > 0 size (default == 100)
         h = RandomArrayApp("h", "h")
         h.integer = False
+        (oid, check, length) = self._runLengthTest(h)
+        self.assertEqual(oid, "y")
+        self.assertEqual(check, length)
+
+    def test_LengthCheck_list(self):
+        """
+        Test creates two random arrays in memory drops, one with zero length,
+        the other with 100. It runs two graphs against
+        each of the arrays and checks whether the branch is
+        traversed on the correct side.
+        """
+        # check > 0 size (default == 100)
+        h = InMemoryDROP("h", "h")
+        h.write(pickle.dumps([1, 2, 3]))
         (oid, check, length) = self._runLengthTest(h)
         self.assertEqual(oid, "y")
         self.assertEqual(check, length)
