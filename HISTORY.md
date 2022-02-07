@@ -4,6 +4,19 @@ Changelog
 
 (unreleased)
 ------------
+- Merge pull request #2 from ICRAR/length. [awicenec]
+
+  Length
+- Fixed last tests. [Andreas Wicenec]
+- Merged MyBranch back in again. [Andreas Wicenec]
+- New LengthCheck branch component. [Andreas Wicenec]
+- Updated GenericGather with correct output length. [Andreas Wicenec]
+- Small format change. [Andreas Wicenec]
+
+
+v0.1.6 (2021-12-23)
+-------------------
+- Release: version v0.1.6 🚀 [Andreas Wicenec]
 - Added GenericGather and associated test. [Andreas Wicenec]
 - Updated fmt. [Andreas Wicenec]
 - Added check and test for wrong output drop name. [Andreas Wicenec]
