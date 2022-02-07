@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Fixed bug when input data is list. [Andreas Wicenec]
+
+
+v0.1.8 (2022-02-07)
+-------------------
+- Release: version v0.1.8 🚀 [Andreas Wicenec]
+
+
 v0.1.7 (2022-02-07)
 -------------------
 - Release: version v0.1.7 🚀 [Andreas Wicenec]
