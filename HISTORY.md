@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.7 (2022-02-07)
+-------------------
+- Release: version v0.1.7 🚀 [Andreas Wicenec]
 - Merge pull request #2 from ICRAR/length. [awicenec]
 
   Length
