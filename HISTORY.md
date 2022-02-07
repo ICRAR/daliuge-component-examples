@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed FileGlob to return only files. [Andreas Wicenec]
+
+
+v0.1.9 (2022-02-07)
+-------------------
+- Release: version v0.1.9 🚀 [Andreas Wicenec]
 - Fixed bug when input data is list. [Andreas Wicenec]
 
 
