@@ -206,8 +206,16 @@ class FileGlob(BarrierAppDROP):
 
     def run(self):
         filetmpl = f"{self.filepath}/{self.wildcard}"
+        filetmpl = os.path.expandvars(filetmpl)
+        logger.debug(f"Looking for files matching {filetmpl}")
         files = glob(filetmpl)
         self.value = [f for f in files if os.path.isfile(f)]
+        if len(self.value) == 0:
+            logger.warning(f"No matching files found for {filetmpl}")
+        else:
+            logger.info(
+                f"Number of files found matching {filetmpl}: {len(self.value)}"
+            )
         self.writeData()
 
 

@@ -1,1 +1,2 @@
 daliuge-engine >= 2.0
+matplotlib

@@ -219,6 +219,23 @@ class TestMyApps(unittest.TestCase):
         res = pickle.loads(droputils.allDropContents(m))
         self.assertEqual(fileList, res)
 
+    def test_FileGlob_class_nomatch(self):
+        """
+        Testing the globbing method finding *this* file
+        """
+        i = NullDROP("i", "i")  # just to be able to start the execution
+        g = FileGlob("g", "g")
+        m = InMemoryDROP("m", "m")
+        g.addInput(i)
+        m.addProducer(g)
+        g.wildcard = os.path.basename("rubbish")
+        g.filepath = os.path.dirname(os.path.realpath(__file__))
+        fileList = glob(f"{g.filepath}/{g.wildcard}")
+        with droputils.DROPWaiterCtx(self, m, timeout=10):
+            i.setCompleted()
+        res = pickle.loads(droputils.allDropContents(m))
+        self.assertEqual(fileList, res)
+
     def test_PickOne_class(self):
         """
         Testing the PickOne app

@@ -27,11 +27,14 @@ install:          ## Install the project in dev mode.
 
 .PHONY: dlginstall
 dlginstall:	  ## Install into $DLG_ROOT/code
-	if [ !"$(DLG_ROOT)" ]; then DLG_CONTRIB=$(shell echo "test_code");
-		# DLG_CONTRIB=$(shell echo `docker exec daliuge-engine /bin/bash -c 'printenv DLG_ROOT'`) &&  echo "Installation directory: $(DLG_CONTRIB)";
-	else
-		scp -r ../`basename $(PWD)` $(DLG_CONTRIB); cd $(DLG_CONTRIB)/`basename $(PWD)` && $(ENV_PREFIX)pip install --upgrade -e .; 
-	fi;
+	@if [ !"$(DLG_ROOT)" ]; then 
+	@   DLG_CONTRIB=$(shell echo "test_code");
+	@else
+	@	DLG_CONTRIB=$(shell echo `docker exec daliuge-engine /bin/bash -c 'printenv DLG_ROOT'`) &&  echo "Installation directory: $(DLG_CONTRIB)";
+	@fi;
+	@d=$(shell pwd);
+	@$(shell echo $(d));
+	@#scp -r ../$(b) $(DLG_CONTRIB); cd $(DLG_CONTRIB)/$(b) && $(ENV_PREFIX)pip install --upgrade -e .; 
 .PHONY: fmt
 fmt:              ## Format code using black & isort.
 	$(ENV_PREFIX)isort dlg_example_cmpts/
