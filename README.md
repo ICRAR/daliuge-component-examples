@@ -21,6 +21,7 @@ pip install dlg_example_cmpts
 ```bash
 docker exec -t daliuge-engine bash -c 'pip install --prefix=$DLG_ROOT/code dlg_example_cmpts'
 ```
+NOTE: If you had this package installed already you will need to re-start the engine after that.
 ## Usage
 For example the MyBranch component will be available to the engine when you specify 
 ```
