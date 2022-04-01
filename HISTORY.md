@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.10 (2022-02-07)
+--------------------
+- Release: version v0.1.10 🚀 [Andreas Wicenec]
 - Fixed FileGlob to return only files. [Andreas Wicenec]
 
 
