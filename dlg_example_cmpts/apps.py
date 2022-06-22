@@ -256,10 +256,11 @@ class PickOne(BarrierAppDROP):
             data = np.array([data])
         else:
             data = np.array(data)
-        self.value = data[0] if len(data) else None
-        self.rest = data[1:] if len(data) > 1 else np.array([])
+        value = data[0] if len(data) else None
+        rest = data[1:] if len(data) > 1 else np.array([])
+        return value, rest
 
-    def writeData(self):
+    def writeData(self, value, rest):
         """
         Prepare the data and write to all outputs
         """
@@ -267,16 +268,16 @@ class PickOne(BarrierAppDROP):
         # and value to every other output
         for output in self.outputs:
             if output.name == "rest_array":
-                d = pickle.dumps(self.rest)
+                d = pickle.dumps(rest)
                 output.len = len(d)
             else:
-                d = pickle.dumps(self.value)
+                d = pickle.dumps(value)
                 output.len = len(d)
             output.write(d)
 
     def run(self):
-        self.readData()
-        self.writeData()
+        value, rest = self.readData()
+        self.writeData(value, rest)
 
 
 ##
