@@ -4,6 +4,21 @@ Changelog
 
 (unreleased)
 ------------
+- Small formatiing change. [Andreas Wicenec]
+- Release memory as soon as possible. [Rodrigo Tobar]
+
+  The PickOne application kept a reference to the inputs' contents,
+  preventing some memory from being released back to the system, even when
+  the DLM was in action.
+
+  This commit prevents memory from being referenced, which in turn reduces
+  the pressure on the system.
+- Added note about restart. [awicenec]
+
+
+v0.1.12 (2022-04-01)
+--------------------
+- Release: version v0.1.12 🚀 [Andreas Wicenec]
 - One more output. [Andreas Wicenec]
 
 
