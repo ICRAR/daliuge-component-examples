@@ -1,5 +1,6 @@
 from dlg import drop
 import pytest, unittest
+import warnings
 import os
 import pickle
 import urllib
@@ -181,6 +182,9 @@ class TestMyApps(unittest.TestCase):
         self.assertEqual(oid, "n")
         self.assertEqual(check, length)
 
+    @pytest.mark.filterwarnings(
+        "ignore::pytest.PytestUnhandledThreadExceptionWarning"
+    )
     def test_LengthCheck_wrongType(self):
         # check wrong type
         w = InMemoryDROP("w", "w")

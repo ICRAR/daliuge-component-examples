@@ -22,6 +22,8 @@ from glob import glob
 import numpy as np
 from dlg import droputils
 from dlg.drop import BarrierAppDROP, BranchAppDrop
+from dlg.exceptions import InvalidDropException
+from dlg.meta import dlg_string_param
 
 logger = logging.getLogger(__name__)
 
@@ -426,7 +428,8 @@ class AdvUrlRetrieve(BarrierAppDROP):
 ##
 # @brief String2JSON
 # @details App that reads a string from a single input and tries
-# to convert that to JSON
+# to convert that to JSON. If port is converted into an argument the
+# JSON value is taken from there.
 # @par EAGLE_START
 # @param category PythonApp
 # @param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
@@ -437,8 +440,13 @@ class AdvUrlRetrieve(BarrierAppDROP):
 #     \~English Port carrying the JSON structure
 # @par EAGLE_END
 class String2JSON(BarrierAppDROP):
+
+    arg: str = dlg_string_param("string", None)
+
     def initialize(self, **kwargs):
         BarrierAppDROP.initialize(self, **kwargs)
+        if not self.arg:
+            self.arg = self._getArg(kwargs, "string", None)
 
     def readData(self):
         input = self.inputs[0]  # ignore all but the first
@@ -446,22 +454,32 @@ class String2JSON(BarrierAppDROP):
             data = json.loads(droputils.allDropContents(input))
         except json.decoder.JSONDecodeError:
             raise TypeError
-        self.json = data
+        return data
 
-    def writeData(self):
+    def writeData(self, data):
         """
         Prepare the data and write to all outputs
         """
         # write rest to array output
         # and value to every other output
         for output in self.outputs:
-            d = pickle.dumps(self.json)
+            d = pickle.dumps(data)
             output.len = len(d)
             output.write(d)
 
     def run(self):
-        self.readData()
-        self.writeData()
+        if (
+            len(self.inputs) == 0
+        ):  # if there is no input use the argument value
+            try:
+                logger.debug("Input found: %s", self.arg)
+                data = json.loads(self.arg)
+            except TypeError:
+                raise
+        else:
+            data = self.readData()
+        self.writeData(data)
+        del data  # make sure this is cleaned up
 
 
 ##
