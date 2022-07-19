@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Removed unused import. [Andreas Wicenec]
+
+
+v0.1.14 (2022-07-19)
+--------------------
+- Release: version v0.1.14 🚀 [Andreas Wicenec]
 - Allow argument in String2JSON. [Andreas Wicenec]
 
 
