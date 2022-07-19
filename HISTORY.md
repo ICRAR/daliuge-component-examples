@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Allow argument in String2JSON. [Andreas Wicenec]
+
+
+v0.1.13 (2022-07-01)
+--------------------
+- Release: version v0.1.13 🚀 [Andreas Wicenec]
 - Small formatiing change. [Andreas Wicenec]
 - Release memory as soon as possible. [Rodrigo Tobar]
 
