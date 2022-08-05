@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Merge branch 'doxygen-update' [Andreas Wicenec]
+
+
+v0.1.16 (2022-08-05)
+--------------------
+- Release: version v0.1.16 🚀 [Andreas Wicenec]
 - Changed DataDrop comments. [Andreas Wicenec]
 - Changed doxygen for DataDrop. [Andreas Wicenec]
 - Hopefully final change. [Andreas Wicenec]
