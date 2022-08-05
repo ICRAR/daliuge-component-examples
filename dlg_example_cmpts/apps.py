@@ -222,11 +222,12 @@ class FileGlob(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param /appclass Application Class/dlg_example_cmpts.apps.PickOne/String/ComponentParameter/readonly//False/False/Import path for application class
+# @param appclass Application Class/dlg_example_cmpts.apps.PickOne/String/ComponentParameter/readonly//False/False/Import path for application class
 # @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
 # @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
-# @param /rest_array rest_array//Object.array/InputPort/readwrite//False/FalseList of elements
-# @param /element element//Object.element/OutputPort/readwrite//False/False/Port carrying the first element of input array
+# @param rest_array rest_array//Object.array/InputPort/readwrite//False/FalseList of elements
+# @param element element//Object.element/OutputPort/readwrite//False/False/Port carrying the first element of input array
+# @param rest_array rest_array//Object.array/OutputPort/readwrite//False/False/Port carrying the rest array
 # @par EAGLE_END
 
 
@@ -341,7 +342,7 @@ class ExtractColumn(BarrierAppDROP):
 # @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
 # @param urlTempl URL Template/"https://eagle.icrar.org"/String/ApplicationArgument/readwrite//False/False/The URL to retrieve
 # @param urlPart URL Part//String/InputPort/readwrite//False/False/The port carrying the content read from the URL.
-# @param content Content//String/InputPort/readwrite//False/False/The port carrying the content read from the URL.
+# @param content Content//String/OutputPort/readwrite//False/False/The port carrying the content read from the URL.
 # @par EAGLE_END
 class AdvUrlRetrieve(BarrierAppDROP):
     """
