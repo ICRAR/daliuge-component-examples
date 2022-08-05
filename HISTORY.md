@@ -4,6 +4,8 @@ Changelog
 
 (unreleased)
 ------------
+- Followed recommendation. [awicenec]
+- Release: version v0.1.16 🚀 [Andreas Wicenec]
 - Merge branch 'doxygen-update' [Andreas Wicenec]
 
 
