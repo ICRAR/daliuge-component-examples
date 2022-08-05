@@ -24,14 +24,10 @@ logger = logging.getLogger(__name__)
 #
 # @par EAGLE_START
 # @param category File
-# @param[in] param/appclass DropClass/dlg_example_cmpts.MyData/String/readonly/ # noqa: E501
-#     \~English Import direction for application class
-# @param[in] param/dummy Dummy parameter/ /String/readwrite/
-#     \~English Dummy modifyable parameter
-# @param[in] port/dummy Dummy in/float/
-#     \~English Dummy producer port
-# @param[out] port/dummy Dummy out/float/
-#     \~English Dummy consumer port
+# @param appclass DropClass/dlg_example_cmpts.MyData/String/ComponentParameter/readonly//False/False/Import direction for application class
+# @param dummy Dummy parameter/ /String/ApplicationArgument/readwrite//False/False/Dummy modifyable parameter
+# @param dummy Dummy in//float/InputPort/readwrite//False/False/Dummy producer port
+# @param dummy Dummy out//float/OutputPort/readwrite//False/False/Dummy consumer port
 # @par EAGLE_END
 
 # Data components usually directly inhert from the AbstractDROP class. Please

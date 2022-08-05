@@ -289,7 +289,7 @@ class PickOne(BarrierAppDROP):
 # @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
 # @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
 # @param index index/0/Integer/ApplicationArgument/readwrite//False/False/0-base index of column to extract
-# @param table_array table_array//array/InputPortreadwrite//False/False/List of elements
+# @param table_array table_array//array/InputPort/readwrite//False/False/List of elements
 # @param column column//Object.1Darray/OutputPort/readwrite//False/False/Port carrying the first element of input array
 #               the type is dependent on the list element type.
 # @par EAGLE_END
