@@ -4,6 +4,8 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed github action version. [Andreas Wicenec]
+- Release: version v0.1.17 🚀 [Andreas Wicenec]
 - Followed recommendation. [awicenec]
 - Release: version v0.1.16 🚀 [Andreas Wicenec]
 - Merge branch 'doxygen-update' [Andreas Wicenec]
