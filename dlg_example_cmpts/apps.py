@@ -44,14 +44,17 @@ logger = logging.getLogger(__name__)
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.MyBranch/String/readonly/ # noqa: E501
+# @param appclass Application class/dlg_example_cmpts.apps.MyBranch/String/ComponentParameter/readonly//False/False/Application class # noqa: E501
 #     \~English Import direction for application class
-# @param[in] port/array Array/float/
-#     \~English Port receiving the input array
-# @param[out] port/Y Y/float/
-#     \~English Port carrying the mean value of the array if mean < 0.5
-# @param[out] port/N N/float/
-#     \~English Port carrying the mean value of the array if mean >= 0.5
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+
+# @param array Array//Object.Array/OutputPort/readwrite//False/False/
+#   \~English Port receiving the input array
+# @param Y Y//float/OutputPort/readwrite//False/False/
+#   \~English Port carrying the mean value of the array if mean < 0.5
+# @param N N//float/OutputPort/readwrite//False/False/
+#   \~English Port carrying the mean value of the array if mean >= 0.5
 # @par EAGLE_END
 
 
@@ -348,7 +351,7 @@ class ExtractColumn(BarrierAppDROP):
 # @param category PythonApp
 # @param[in] param/urlTempl URL Template/"https://eagle.icrar.org"/String/readwrite/ # noqa: E501
 #     \~English The URL to retrieve
-# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.AdvUrlRetrieve/String/readonly/ # noqa: E501
+# @param param/appclass Application Class/dlg_example_cmpts.apps.AdvUrlRetrieve/String/readonly/ # noqa: E501
 #     \~English Application class
 # @param[in] port/urlPart URL Part/String/
 #     \~English The port carrying the content read from the URL.
