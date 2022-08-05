@@ -222,9 +222,11 @@ class FileGlob(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param /appclass Application Class/dlg_example_cmpts.apps.PickOne/String/ComponentParameter/readonly/Import path for application class
-# @param /rest_array rest_array//Object.array/InputPort/readwrite/List of elements
-# @param /element element//Object.element/OutputPort/Port carrying the first element of input array
+# @param /appclass Application Class/dlg_example_cmpts.apps.PickOne/String/ComponentParameter/readonly//False/False/Import path for application class
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param /rest_array rest_array//Object.array/InputPort/readwrite//False/FalseList of elements
+# @param /element element//Object.element/OutputPort/readwrite//False/False/Port carrying the first element of input array
 # @par EAGLE_END
 
 
@@ -283,10 +285,12 @@ class PickOne(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param appclass Application Class/dlg_example_cmpts.apps.ExtractColumn/String/ComponentParameter/readonly/Import path for application class
-# @param index index/0/Integer/ApplicationArgument/readwrite/0-base index of column to extract
-# @param table_array table_array//array/InputPortreadwrite/List of elements
-# @param column column/1Darray/OutputPort/readwrite/Port carrying the first element of input array
+# @param appclass Application Class/dlg_example_cmpts.apps.ExtractColumn/String/ComponentParameter/readonly//False/False/Import path for application class
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param index index/0/Integer/ApplicationArgument/readwrite//False/False/0-base index of column to extract
+# @param table_array table_array//array/InputPortreadwrite//False/False/List of elements
+# @param column column/1Darray/OutputPort/readwrite//False/False/Port carrying the first element of input array
 #               the type is dependent on the list element type.
 # @par EAGLE_END
 class ExtractColumn(BarrierAppDROP):
@@ -332,14 +336,12 @@ class ExtractColumn(BarrierAppDROP):
 # use placeholders to construct the final URL.
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/urlTempl URL Template/"https://eagle.icrar.org"/String/readwrite/ # noqa: E501
-#     \~English The URL to retrieve
-# @param param/appclass Application Class/dlg_example_cmpts.apps.AdvUrlRetrieve/String/readonly/ # noqa: E501
-#     \~English Application class
-# @param[in] port/urlPart URL Part/String/
-#     \~English The port carrying the content read from the URL.
-# @param[out] port/content Content/String/
-#     \~English The port carrying the content read from the URL.
+# @param param/appclass Application Class/dlg_example_cmpts.apps.AdvUrlRetrieve/String/ComponentParameter/readonly//False/False/Application class
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param urlTempl URL Template/"https://eagle.icrar.org"/String/ApplicationArgument/readwrite//False/False/The URL to retrieve
+# @param urlPart URL Part/String/InputPort/readwrite//False/False/The port carrying the content read from the URL.
+# @param content Content/String/InputPort/readwrite//False/False/The port carrying the content read from the URL.
 # @par EAGLE_END
 class AdvUrlRetrieve(BarrierAppDROP):
     """
@@ -417,12 +419,11 @@ class AdvUrlRetrieve(BarrierAppDROP):
 # JSON value is taken from there.
 # @par EAGLE_START
 # @param category PythonApp
-# @param/appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/readonly/ # noqa: E501
-#     \~English Import path for application class
-# @param[in] port/string string/string/readwrite/
-#     \~English String to be converted
-# @param[out] port/element element/complex/
-#     \~English Port carrying the JSON structure
+# @param appclass Application Class/dlg_example_cmpts.apps.String2JSON/String/ComponentParameter/readonly//False/False/Application class
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param string string/String/InputPort/readwrite//False/False/String to be converted
+# @param element element/Object.json/OutputPort/readwrite//False/False/Port carrying the JSON structure
 # @par EAGLE_END
 class String2JSON(BarrierAppDROP):
 
@@ -476,12 +477,11 @@ class String2JSON(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param/appclass Application Class/dlg_example_cmpts.apps.GenericGather/String/readonly/ # noqa: E501
-#     \~English Import path for application class
-# @param[in] port/input input/complex/readwrite/
-#     \~English 0-base placeholder port for inputs
-# @param[out] port/output output/complex/
-#     \~English Placeholder port for outputs
+# @param appclass Application Class/dlg_example_cmpts.apps.GenericGather/String/ComponentParameter/readonly//False/False/Import path for application class
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param input input/Object/readwrite//False/False/0-base placeholder port for inputs
+# @param output output/Object/readwrite//False/False/Placeholder port for outputs
 # @par EAGLE_END
 class GenericGather(BarrierAppDROP):
     def initialize(self, **kwargs):
