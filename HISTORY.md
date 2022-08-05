@@ -4,6 +4,19 @@ Changelog
 
 (unreleased)
 ------------
+- Changed DataDrop comments. [Andreas Wicenec]
+- Changed doxygen for DataDrop. [Andreas Wicenec]
+- Hopefully final change. [Andreas Wicenec]
+- Changed all the rest of the doxygen strings. [Andreas Wicenec]
+- More doxygen changes. [Andreas Wicenec]
+- Another doxygen change. [Andreas Wicenec]
+- Additional change to doxygen. [Andreas Wicenec]
+- Updated doxygen for BranchApp. [Andreas Wicenec]
+
+
+v0.1.15 (2022-07-19)
+--------------------
+- Release: version v0.1.15 🚀 [Andreas Wicenec]
 - Removed unused import. [Andreas Wicenec]
 
 
