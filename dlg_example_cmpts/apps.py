@@ -98,14 +98,12 @@ class MyBranch(BranchAppDrop):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/appclass Application Class/dlg_example_cmpts.apps.LengthCheck/String/readonly/ # noqa: E501
-#     \~English Import direction for application class
-# @param[in] port/array Array/float/
-#     \~English Port receiving the input array
-# @param[out] port/Y Y/float/
-#     \~English Port carrying the array if Y.
-# @param[out] port/N N/float/
-#     \~English Port carrying an empty array (N)
+# @param appclass Application class/dlg_example_cmpts.apps.MyBranch/String/ComponentParameter/readonly//False/False/Application class # noqa: E501
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param array Array//Object.Array/InputPort/readwrite//False/False/Port receiving the input array
+# @param Y Y//float/OutputPort/readwrite//False/False/English Port carrying the mean value of the array if mean < 0.5
+# @param N N//float/OutputPort/readwrite//False/False/English Port carrying the mean value of the array if mean >= 0.5
 # @par EAGLE_END
 
 
@@ -172,14 +170,12 @@ class LengthCheck(BranchAppDrop):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param[in] param/wildcard wildcard/"*"/String/readwrite/
-#     \~English Wildcard used to search for files
-# @param[in] param/filepath filepath/"."/String/readwrite/
-#     \~English Path to search for files
-# param/appclass Application Class/dlg_example_cmpts.apps.FileGlob/String/readonly/ # noqa: E501
-#     \~English Import path for application class
-# @param[out] port/file_list file_list/array/
-#     \~English Port carrying the list of files
+# @param appclass Application class/dlg_example_cmpts.apps.FileGlob/String/ComponentParameter/readonly//False/False/Application class # noqa: E501
+# @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
+# @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
+# @param wildcard wildcard/"*"/String/InputPort/readwrite//False/False/Port receiving the search pattern
+# @param filepath filepath/"."/String/InputPort/readwrite//False/False/Port receiving the path to search
+# @param file_list file_list//Object.array/OutputPort/readwrite//False/False/Port carrying the resulting file_list
 # @par EAGLE_END
 
 
@@ -226,13 +222,9 @@ class FileGlob(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param/appclass Application Class/dlg_example_cmpts.apps.PickOne/String/readonly/ # noqa: E501
-#     \~English Import path for application class
-# @param[in] port/rest_array rest_array//array/readwrite/
-#     \~English List of elements
-# @param[out] port/element element/complex/
-#     \~English Port carrying the first element of input array
-#               the type is dependent on the list element type.
+# @param /appclass Application Class/dlg_example_cmpts.apps.PickOne/String/ComponentParameter/readonly/Import path for application class
+# @param /rest_array rest_array//Object.array/InputPort/readwrite/List of elements
+# @param /element element//Object.element/OutputPort/Port carrying the first element of input array
 # @par EAGLE_END
 
 
@@ -291,14 +283,10 @@ class PickOne(BarrierAppDROP):
 #
 # @par EAGLE_START
 # @param category PythonApp
-# @param/appclass Application Class/dlg_example_cmpts.apps.ExtractColumn/String/readonly/ # noqa: E501
-#     \~English Import path for application class
-# @param[in] param/index index/0/Integer/readwrite/
-#     \~English 0-base index of column to extract
-# @param[in] port/table_array table_array//array/readwrite/
-#     \~English List of elements
-# @param[out] port/column column/1Darray/
-#     \~English Port carrying the first element of input array
+# @param appclass Application Class/dlg_example_cmpts.apps.ExtractColumn/String/ComponentParameter/readonly/Import path for application class
+# @param index index/0/Integer/ApplicationArgument/readwrite/0-base index of column to extract
+# @param table_array table_array//array/InputPortreadwrite/List of elements
+# @param column column/1Darray/OutputPort/readwrite/Port carrying the first element of input array
 #               the type is dependent on the list element type.
 # @par EAGLE_END
 class ExtractColumn(BarrierAppDROP):
