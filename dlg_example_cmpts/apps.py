@@ -45,7 +45,6 @@ logger = logging.getLogger(__name__)
 # @par EAGLE_START
 # @param category PythonApp
 # @param appclass Application class/dlg_example_cmpts.apps.MyBranch/String/ComponentParameter/readonly//False/False/Application class # noqa: E501
-#     \~English Import direction for application class
 # @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
 # @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
 # @param array Array//Object.Array/InputPort/readwrite//False/False/Port receiving the input array
