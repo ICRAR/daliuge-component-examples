@@ -48,13 +48,9 @@ logger = logging.getLogger(__name__)
 #     \~English Import direction for application class
 # @param execution_time Execution Time/5/Float/ComponentParameter/readonly//False/False/Estimated execution time # noqa: E501
 # @param num_cpus No. of CPUs/1/Integer/ComponentParameter/readonly//False/False/Number of cores used # noqa: E501
-
-# @param array Array//Object.Array/OutputPort/readwrite//False/False/
-#   \~English Port receiving the input array
-# @param Y Y//float/OutputPort/readwrite//False/False/
-#   \~English Port carrying the mean value of the array if mean < 0.5
-# @param N N//float/OutputPort/readwrite//False/False/
-#   \~English Port carrying the mean value of the array if mean >= 0.5
+# @param array Array//Object.Array/InputPort/readwrite//False/False/Port receiving the input array
+# @param Y Y//float/OutputPort/readwrite//False/False/English Port carrying the mean value of the array if mean < 0.5
+# @param N N//float/OutputPort/readwrite//False/False/English Port carrying the mean value of the array if mean >= 0.5
 # @par EAGLE_END
 
 
