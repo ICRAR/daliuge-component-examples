@@ -21,7 +21,8 @@ from glob import glob
 
 import numpy as np
 from dlg import droputils
-from dlg.drop import BarrierAppDROP, BranchAppDrop
+from dlg.drop import BarrierAppDROP
+from dlg.apps.branch import BranchAppDrop
 from dlg.meta import dlg_string_param
 
 logger = logging.getLogger(__name__)
