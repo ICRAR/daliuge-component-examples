@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Adjust import to daliuge restructure of drop.py. [Andreas Wicenec]
+
+
+v0.1.17 (2022-08-05)
+--------------------
+- Release: version v0.1.17 🚀 [Andreas Wicenec]
 - Fixed github action version. [Andreas Wicenec]
 - Release: version v0.1.17 🚀 [Andreas Wicenec]
 - Followed recommendation. [awicenec]
