@@ -11,7 +11,7 @@ then result in a single EAGLE palette.
 Be creative! do whatever you need to do!
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.17"
 import json
 import logging
 import os
@@ -21,7 +21,13 @@ from glob import glob
 
 import numpy as np
 from dlg import droputils
-from dlg.drop import BarrierAppDROP, BranchAppDrop
+from dlg.drop import BarrierAppDROP
+
+try:
+    from dlg.drop import BranchAppDrop
+except ImportError:
+    from dlg.apps.branch import BranchAppDrop
+
 from dlg.meta import dlg_string_param
 
 logger = logging.getLogger(__name__)

@@ -27,10 +27,11 @@ install:          ## Install the project in dev mode.
 
 .PHONY: dlginstall
 dlginstall:	  ## Install into $DLG_ROOT/code
-	@if [ !"$(DLG_ROOT)" ]; then 
+	@if [ !"$(DLG_ROOT)" ]
+	@then 
 	@   DLG_CONTRIB=$(shell echo "test_code");
 	@else
-	@	DLG_CONTRIB=$(shell echo `docker exec daliuge-engine /bin/bash -c 'printenv DLG_ROOT'`) &&  echo "Installation directory: $(DLG_CONTRIB)";
+	@   DLG_CONTRIB=$(shell echo `docker exec daliuge-engine /bin/bash -c 'printenv DLG_ROOT'`) &&  echo "Installation directory: $(DLG_CONTRIB)";
 	@fi;
 	@d=$(shell pwd);
 	@$(shell echo $(d));
