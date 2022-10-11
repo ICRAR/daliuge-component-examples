@@ -13,7 +13,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: 
+        run: |
           sudo apt-get update && sudo apt-get install -y doxygen xsltproc
           pip install BlockDAG
       - name: Set env
