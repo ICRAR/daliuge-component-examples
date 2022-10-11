@@ -438,7 +438,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
 # @par EAGLE_END
 class String2JSON(BarrierAppDROP):
 
-    arg: str = dlg_string_param("string", None)
+    string = dlg_string_param("string", None)
 
     def initialize(self, **kwargs):
         BarrierAppDROP.initialize(self, **kwargs)
@@ -467,8 +467,8 @@ class String2JSON(BarrierAppDROP):
             len(self.inputs) == 0
         ):  # if there is no input use the argument value
             try:
-                logger.debug("Input found: %s", self.arg)
-                data = json.loads(self.arg)
+                logger.debug("Input found: %s", self.string)
+                data = json.loads(self.string)
             except TypeError:
                 raise
         else:
