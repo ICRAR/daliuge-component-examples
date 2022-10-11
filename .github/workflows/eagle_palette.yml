@@ -13,7 +13,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: sudo apt-get update && sudo apt-get install -y doxygen xsltproc
+        run: 
+          sudo apt-get update && sudo apt-get install -y doxygen xsltproc
+          pip install BlockDAG
       - name: Set env
         run: |
           echo "PROJECT_VERSION=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
