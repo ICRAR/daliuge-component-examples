@@ -18,7 +18,7 @@ jobs:
           pip install BlockDAG
       - name: Set env
         run: |
-          echo "PROJECT_NAME=${GITHUB_REPOSITORY#*/}"
+          echo "PROJECT_NAME=${GITHUB_REPOSITORY#*/}" >> $PROJECT_NAME
           echo "PROJECT_VERSION=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
           echo "GIT_REPO=$(echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY)" >> $GITHUB_ENV
       - name: Generate Palette
