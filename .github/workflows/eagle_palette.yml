@@ -5,8 +5,6 @@ jobs:
   test:
     name: Generate EAGLE component palette
     runs-on: ubuntu-latest
-    env:
-      PROJECT_NAME: daliuge-component-examples
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -20,6 +18,7 @@ jobs:
           pip install BlockDAG
       - name: Set env
         run: |
+          echo "PROJECT_NAME=${GITHUB_REPOSITORY#*/}"
           echo "PROJECT_VERSION=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
           echo "GIT_REPO=$(echo $GITHUB_SERVER_URL/$GITHUB_REPOSITORY)" >> $GITHUB_ENV
       - name: Generate Palette
