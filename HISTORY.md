@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed the palette extraction. [Andreas Wicenec]
+
+
+v0.1.19 (2022-09-02)
+--------------------
+- Release: version v0.1.19 🚀 [Andreas Wicenec]
 - Updated github action. [Andreas Wicenec]
 
 
