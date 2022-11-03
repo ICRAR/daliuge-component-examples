@@ -24,7 +24,7 @@ jobs:
           echo $PROJECT_NAME
           echo $PROJECT_VERSION
           echo $GITHUB_REF_NAME
-          python3 xml2palette.py ./ $PROJECT_NAME-$GITHUB_REF_NAME.palette
+          python3 xml2palette.py ./dlg_example_cmpts $PROJECT_NAME-$GITHUB_REF_NAME.palette
       - name: Push palette to ICRAR/EAGLE_test_repo
         env:
           EAGLE_USERNAME: eagle-updater
