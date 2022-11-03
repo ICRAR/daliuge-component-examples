@@ -4,6 +4,28 @@ Changelog
 
 (unreleased)
 ------------
+- Extract cmpts into the palette. [Andreas Wicenec]
+- Hopefully this is now working. [Andreas Wicenec]
+- More trials. [awicenec]
+- And another one. [awicenec]
+- Another try to set PROJECT_NAME. [awicenec]
+- Dynamically set the PROJECT_NAME. [awicenec]
+- Default Python version too high fixed to 3.9. [Andreas Wicenec]
+- Multi-line workflow config. [Andreas Wicenec]
+- Import of missing BlockDAG. [Andreas Wicenec]
+- Fixed String2Json reading of string parameter. [Andreas Wicenec]
+- Make lint happy. [Andreas Wicenec]
+
+
+v0.1.20 (2022-11-03)
+--------------------
+- Release: version v0.1.20 🚀 [Andreas Wicenec]
+- Fixed the palette extraction. [Andreas Wicenec]
+
+
+v0.1.19 (2022-09-02)
+--------------------
+- Release: version v0.1.19 🚀 [Andreas Wicenec]
 - Updated github action. [Andreas Wicenec]
 
 
