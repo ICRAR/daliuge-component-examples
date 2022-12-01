@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.20 (2022-11-03)
+--------------------
+- Release: version v0.1.20 🚀 [Andreas Wicenec]
 - Fixed the palette extraction. [Andreas Wicenec]
 
 
