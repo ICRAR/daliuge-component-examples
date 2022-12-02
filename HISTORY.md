@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Fix import of blockdag. [Andreas Wicenec]
+- Release: version v0.1.22 🚀 [Andreas Wicenec]
+
+
 v0.1.22 (2022-12-02)
 --------------------
 - Release: version v0.1.22 🚀 [Andreas Wicenec]
