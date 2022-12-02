@@ -2,8 +2,9 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+v0.1.22 (2022-12-02)
+--------------------
+- Release: version v0.1.22 🚀 [Andreas Wicenec]
 - Fixed reading params with dlg_*_param. [Andreas Wicenec]
 - Release: version v0.1.20 🚀 [Andreas Wicenec]
 - Extract cmpts into the palette. [Andreas Wicenec]
