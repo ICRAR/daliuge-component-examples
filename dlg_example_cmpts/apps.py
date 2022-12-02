@@ -60,9 +60,6 @@ logger = logging.getLogger(__name__)
 
 
 class MyBranch(BranchAppDrop):
-    def initialize(self, **kwargs):
-        BranchAppDrop.initialize(self, **kwargs)
-
     def run(self):
         """
         Just reading the input array and calculating the mean.
@@ -78,7 +75,6 @@ class MyBranch(BranchAppDrop):
         output = self.outputs[self.ind]
         d = pickle.dumps(self.value)
         output.len = len(d)
-        logger.info(f">>>>>>> Writing value {self.value} to output {self.ind}")
         output.write(d)
 
     def condition(self):
@@ -194,9 +190,6 @@ class FileGlob(BarrierAppDROP):
     wildcard = dlg_string_param("wildcard", None)
     filepath = dlg_string_param("filepath", None)
 
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
-
     def writeData(self):
         """
         Prepare the data and write to all outputs
@@ -242,9 +235,6 @@ class PickOne(BarrierAppDROP):
     """
     Simple app picking one element at a time. Good for Loops.
     """
-
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
 
     def readData(self):
         input = self.inputs[0]
@@ -308,9 +298,6 @@ class ExtractColumn(BarrierAppDROP):
 
     index = dlg_int_param("index", None)
 
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
-
     def readData(self):
         input = self.inputs[0]
         table_array = pickle.loads(droputils.allDropContents(input))
@@ -362,9 +349,6 @@ class AdvUrlRetrieve(BarrierAppDROP):
     """
 
     urlTempl = dlg_string_param("urlTempl", None)
-
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
 
     def constructUrl(self):
         url = self.urlTempl
@@ -440,9 +424,6 @@ class String2JSON(BarrierAppDROP):
 
     string = dlg_string_param("string", None)
 
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
-
     def readData(self):
         input = self.inputs[0]  # ignore all but the first
         try:
@@ -493,9 +474,6 @@ class String2JSON(BarrierAppDROP):
 # @param output output//Object/OutputPort/readwrite//False/False/Placeholder port for outputs # noqa: E501
 # @par EAGLE_END
 class GenericGather(BarrierAppDROP):
-    def initialize(self, **kwargs):
-        BarrierAppDROP.initialize(self, **kwargs)
-
     def readWriteData(self):
 
         inputs = self.inputs
