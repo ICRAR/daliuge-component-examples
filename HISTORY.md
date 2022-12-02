@@ -4,6 +4,8 @@ Changelog
 
 (unreleased)
 ------------
+- Fixed reading params with dlg_*_param. [Andreas Wicenec]
+- Release: version v0.1.20 🚀 [Andreas Wicenec]
 - Extract cmpts into the palette. [Andreas Wicenec]
 - Hopefully this is now working. [Andreas Wicenec]
 - More trials. [awicenec]
@@ -15,6 +17,11 @@ Changelog
 - Import of missing BlockDAG. [Andreas Wicenec]
 - Fixed String2Json reading of string parameter. [Andreas Wicenec]
 - Make lint happy. [Andreas Wicenec]
+
+
+v0.1.21 (2022-12-01)
+--------------------
+- Release: version v0.1.21 🚀 [Andreas Wicenec]
 
 
 v0.1.20 (2022-11-03)
