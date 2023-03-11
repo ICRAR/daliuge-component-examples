@@ -21,7 +21,7 @@ from glob import glob
 
 import numpy as np
 from dlg import droputils
-from dlg.drop import BarrierAppDROP
+from dlg.apps.app_base import BarrierAppDROP
 
 try:
     from dlg.drop import BranchAppDrop
@@ -353,23 +353,46 @@ class AdvUrlRetrieve(BarrierAppDROP):
     def constructUrl(self):
         url = self.urlTempl
         # this will ignore inputs not referenced in template
-        for x, v in enumerate(self.urlParts):
-            pathRef = "%%i%d" % (x,)
-            if pathRef in url:
-                url = url.replace(pathRef, v)
+        # if isinstance(self.urlParts, list):
+        #     for x, v in enumerate(self.urlParts):
+        #         pathRef = "%%i%d" % (x,)
+        #         if pathRef in url:
+        #             url = url.replace(pathRef, v)
+        i = 0
+        if isinstance(self.urlParts, dict):
+            # named ports support
+            for n, v in self.urlParts.items():
+                nRef = "{%s}" % n
+                if nRef in url:
+                    url = url.replace(nRef, v)
+                # fallback to %iX format
+                pathRef = "%%i%d" % (i,)
+                if pathRef in url:
+                    url = url.replace(pathRef, v)
+                i += 1
+        else:
+            raise TypeError
         logger.info(f"Constructed URL: {url}")
         return url
 
     def readData(self):
         # for this app we are expecting URL fractions on the inputs
-        urlParts = []
-        for input in self.inputs:
+        urlParts = {}
+        named_inputs = self._generateNamedInputs()
+        idict = named_inputs
+        # if isinstance(self.inputs, list):
+        #     idict = dict(enumerate(named_inputs))
+        #     idict = {y: x for x, y in idict.items()}
+        # elif isinstance(named_inputs, dict):
+        #     idict = self.inputs
+        logger.debug("Inputs identified: %s", idict)
+        for (name, input) in idict.items():
             part = pickle.loads(droputils.allDropContents(input))
             # make sure the placeholders are strings
-            logger.info(f"URL part: {part}")
+            logger.info(f"URL part: {name}:{part}")
             if not isinstance(part, str):
                 raise TypeError
-            urlParts.append(part)
+            urlParts.update({name: part})
         self.urlParts = urlParts
         self.url = self.constructUrl()
         logger.info("Reading from %s", self.url)
