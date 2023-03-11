@@ -19,7 +19,11 @@ from dlg_example_cmpts import (
     GenericGather,
 )
 from dlg.apps.simple import RandomArrayApp
-from dlg.data.drops import InMemoryDROP, NullDROP
+
+try:
+    from dlg.data.drops import InMemoryDROP, NullDROP
+except ImportError:
+    from dlg.drop import InMemoryDROP, NullDROP
 import logging
 import json
 import numpy as np

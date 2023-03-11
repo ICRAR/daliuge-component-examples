@@ -1,20 +1,11 @@
-"""
-dlg_example_cmpts component module.
-
-This is the module of daliuge_component_examples containing DALiuGE data
-components. Here you put your main data classes and objects.
-
-Typically a component project will contain multiple components and will
-then result in a single EAGLE palette.
-
-Be creative! do whatever you need to do!
-"""
 import logging
 import io
+from dlg.meta import dlg_string_param
 
-from dlg.ddap_protocol import DROPStates
-from dlg.data.drops.memory import InMemoryDROP
-from dlg.data.io import MemoryIO
+try:
+    from dlg.data.drops.memory import InMemoryDROP
+except ImportError:
+    from dlg.drop import InMemoryDROP
 
 logger = logging.getLogger(__name__)
 
@@ -34,11 +25,6 @@ logger = logging.getLogger(__name__)
 
 # Data components usually directly inhert from the AbstractDROP class. Please
 # refer to the Developer Guide for more information.
-
-import logging
-from dlg.meta import dlg_string_param
-
-logger = logging.getLogger(__name__)
 
 
 class MyDataDROP(InMemoryDROP):
