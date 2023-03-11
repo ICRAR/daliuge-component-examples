@@ -50,3 +50,7 @@ class MyDataDROP(InMemoryDROP):
 
     def initialize(self, *args, **kwargs):
         self._buf = io.BytesIO(self.content.encode("utf-8"))
+
+    @property
+    def dataURL(self) -> str:
+        return "null://data.url/Hello"

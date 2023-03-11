@@ -9,7 +9,7 @@ from dlg import droputils
 
 from dlg_example_funcs import simple
 from dlg.apps.pyfunc import PyFuncApp
-from dlg.drop import FileDROP, InMemoryDROP, NullDROP
+from dlg.data.drops import FileDROP, InMemoryDROP, NullDROP
 from dlg.ddap_protocol import DROPStates
 import logging
 import json

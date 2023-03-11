@@ -380,9 +380,11 @@ class AdvUrlRetrieve(BarrierAppDROP):
         urlParts = {}
         named_inputs = self._generateNamedInputs()
         idict = named_inputs
-        # if isinstance(self.inputs, list):
-        #     idict = dict(enumerate(named_inputs))
-        #     idict = {y: x for x, y in idict.items()}
+        if len(named_inputs) > 0:
+            idict = named_inputs
+        else:
+            idict = dict(enumerate(self.inputs))
+            # idict = {y: x for x, y in idict.items()}
         # elif isinstance(named_inputs, dict):
         #     idict = self.inputs
         logger.debug("Inputs identified: %s", idict)

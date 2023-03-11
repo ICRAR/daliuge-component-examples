@@ -1,6 +1,4 @@
-from dlg import drop
 import pytest, unittest
-import warnings
 import os
 import pickle
 import urllib
@@ -21,8 +19,7 @@ from dlg_example_cmpts import (
     GenericGather,
 )
 from dlg.apps.simple import RandomArrayApp
-from dlg.drop import FileDROP, InMemoryDROP, NullDROP
-from dlg.ddap_protocol import DROPStates
+from dlg.data.drops import InMemoryDROP, NullDROP
 import logging
 import json
 import numpy as np
@@ -528,10 +525,15 @@ class TestMyApps(unittest.TestCase):
         """
         Dummy getIO method test for data drop
         """
-        assert MyDataDROP("a", "a").getIO() == "Hello from MyDataDROP"
+        a = MyDataDROP("a", "a")
+        a.content = "Hello World"
+        a.setCompleted()
+        content = droputils.allDropContents(a)
+        assert content == b"Hello World"
 
     def test_myData_dataURL(self):
         """
         Dummy dataURL method test for data drop
         """
-        assert MyDataDROP("a", "a").dataURL == "Hello from the dataURL method"
+        a = MyDataDROP("a", "a")
+        assert a.dataURL == "null://data.url/Hello"
