@@ -4,6 +4,11 @@ Changelog
 
 (unreleased)
 ------------
+- Cleanup to fix tests. [Andreas Wicenec]
+- Backward compatible import. [Andreas Wicenec]
+- Fixed tests. [Andreas Wicenec]
+- MyDataDROP update. AdvUrlRetrieve named ports. [Andreas Wicenec]
+- Release: version v0.1.22 🚀 [Andreas Wicenec]
 - Fix import of blockdag. [Andreas Wicenec]
 - Release: version v0.1.22 🚀 [Andreas Wicenec]
 
