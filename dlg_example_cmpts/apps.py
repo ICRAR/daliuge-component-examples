@@ -21,7 +21,11 @@ from glob import glob
 
 import numpy as np
 from dlg import droputils
-from dlg.apps.app_base import BarrierAppDROP
+
+try:
+    from dlg.drop import BarrierAppDROP
+except ImportError:
+    from dlg.apps.app_base import BarrierAppDROP
 
 try:
     from dlg.drop import BranchAppDrop
