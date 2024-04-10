@@ -4,6 +4,13 @@ Changelog
 
 (unreleased)
 ------------
+- Updated to requests instead of urllib. [Andreas Wicenec]
+- Required updates for compatibility. [Andreas Wicenec]
+
+
+v0.1.23 (2023-03-11)
+--------------------
+- Release: version v0.1.23 🚀 [Andreas Wicenec]
 - Cleanup to fix tests. [Andreas Wicenec]
 - Backward compatible import. [Andreas Wicenec]
 - Fixed tests. [Andreas Wicenec]
