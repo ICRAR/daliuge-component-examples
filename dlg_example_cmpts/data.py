@@ -1,5 +1,6 @@
-import logging
 import io
+import logging
+
 from dlg.meta import dlg_string_param
 
 try:

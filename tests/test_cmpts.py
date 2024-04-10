@@ -1,33 +1,36 @@
-import pytest, unittest
+"""
+Test module for example components.
+"""
+from glob import glob
 import os
 import pickle
 import urllib
 import http
+import logging
+import json
+from time import sleep
+import pytest, unittest
 
-from glob import glob
+import numpy as np
+
 from dlg import droputils
+from dlg.apps.simple import RandomArrayApp
 
 from dlg_example_cmpts import (
     MyBranch,
     LengthCheck,
     MyDataDROP,
     FileGlob,
-    PickOne,
     String2JSON,
     ExtractColumn,
     AdvUrlRetrieve,
     GenericGather,
 )
-from dlg.apps.simple import RandomArrayApp
 
 try:
     from dlg.data.drops import InMemoryDROP, NullDROP
 except ImportError:
     from dlg.drop import InMemoryDROP, NullDROP
-import logging
-import json
-import numpy as np
-from time import sleep
 
 logger = logging.Logger(__name__)
 
@@ -240,59 +243,6 @@ class TestMyApps(unittest.TestCase):
             i.setCompleted()
         res = pickle.loads(droputils.allDropContents(m))
         self.assertEqual(fileList, res)
-
-    def test_PickOne_class(self):
-        """
-        Testing the PickOne app
-        """
-        i = NullDROP("i", "i")  # just to be able to start the execution
-        l = RandomArrayApp("l", "l")
-        l.integer = True
-        l.high = 100
-        l.size = 10
-        a = InMemoryDROP("a", "a", type="array", nm="start_array")
-        p = PickOne("p", "p")
-        r = InMemoryDROP("r", "r", type="array", nm="rest_array")
-        o = InMemoryDROP("o", "o", type="scalar", nm="value")
-
-        i.addConsumer(l)
-        a.addProducer(l)
-        p.addInput(a)
-        r.addProducer(p)  # this should contain the rest elements
-        o.addProducer(p)  # this should contain the first element
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
-            i.setCompleted()
-        in_array = pickle.loads(droputils.allDropContents(a))
-        first = pickle.loads(droputils.allDropContents(o))
-        rest_array = pickle.loads(droputils.allDropContents(r))
-        self.assertEqual(in_array[0], first)
-        self.assertEqual(all(in_array[1:]), all(rest_array))
-
-    def test_PickOne_wrong_input_type(self):
-        """
-        Testing the PickOne with wrong input type
-        """
-        a = InMemoryDROP("a", "a", type="array", nm="start_array")
-        a.write(pickle.dumps(1))  # this is scalar not array
-        p = PickOne("p", "p")
-        a.addConsumer(p)
-        with self.assertRaises(TypeError):
-            a.setCompleted()
-            p.readData()
-
-    def test_PickOne_0dim(self):
-        """
-        Testing the PickOne with 0dim input
-        """
-        a = InMemoryDROP("a", "a")
-        a.write(pickle.dumps(np.array(1)))  # this is 0dim not array
-        a.name = "start_array"
-        p = PickOne("p", "p")
-
-        p.addInput(a)
-        with droputils.DROPWaiterCtx(self, p, timeout=10):
-            a.setCompleted()
-        self.assertRaises(TypeError)
 
     def test_String2JSON(self):
         """
