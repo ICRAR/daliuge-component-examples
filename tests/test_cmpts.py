@@ -1,10 +1,11 @@
 """
 Test module for example components.
 """
+
 from glob import glob
 import os
 import pickle
-import urllib
+import requests
 import http
 import logging
 import json
@@ -106,9 +107,7 @@ class TestMyApps(unittest.TestCase):
         n = InMemoryDROP("n", "n")  # the memory drop for the NO branch
         y = InMemoryDROP("y", "y")  # the memory drop for the YES branch
         if not isinstance(arrayDROP, InMemoryDROP):
-            startDrop = NullDROP(
-                "i", "i"
-            )  # just to be able to start the execution
+            startDrop = NullDROP("i", "i")  # just to be able to start the execution
             m = InMemoryDROP("m", "m")  # the receiving drop
             startDrop.addConsumer(arrayDROP)
             m.addProducer(arrayDROP)
@@ -186,9 +185,7 @@ class TestMyApps(unittest.TestCase):
         self.assertEqual(oid, "n")
         self.assertEqual(check, length)
 
-    @pytest.mark.filterwarnings(
-        "ignore::pytest.PytestUnhandledThreadExceptionWarning"
-    )
+    @pytest.mark.filterwarnings("ignore::pytest.PytestUnhandledThreadExceptionWarning")
     def test_LengthCheck_wrongType(self):
         # check wrong type
         w = InMemoryDROP("w", "w")
@@ -363,7 +360,7 @@ class TestMyApps(unittest.TestCase):
         e.addOutput(o)
         with droputils.DROPWaiterCtx(self, o, timeout=10):
             a.setCompleted()
-        self.assertRaises(urllib.error.URLError)
+        self.assertRaises(requests.exceptions.RequestException)
 
     def test_AdvUrlRetrieve_invalidUrl(self):
         """
@@ -405,7 +402,7 @@ class TestMyApps(unittest.TestCase):
 
         e.addInput(a)
         # e.addOutput(o)
-        with droputils.DROPWaiterCtx(self, e, timeout=10):
+        with droputils.DROPWaiterCtx(self, e, timeout=2):
             a.setCompleted()
         # content = json.loads(pickle.loads(droputils.allDropContents(a)))
         # self.assertEqual(content["args"], testContent["args"])

@@ -16,11 +16,13 @@ import json
 import logging
 import os
 import pickle
-import requests
 from glob import glob
+from urllib.request import url2pathname
 
 import numpy as np
+import requests  # type: ignore
 from dlg import droputils
+from dlg.meta import dlg_int_param, dlg_string_param
 
 try:
     from dlg.drop import BarrierAppDROP
@@ -32,9 +34,9 @@ try:
 except ImportError:
     from dlg.apps.branch import BranchAppDrop
 
-from dlg.meta import dlg_int_param, dlg_string_param
 
 logger = logging.getLogger(__name__)
+
 
 ##
 # @brief MyBranch
@@ -212,9 +214,7 @@ class FileGlob(BarrierAppDROP):
         if len(self.value) == 0:
             logger.warning(f"No matching files found for {filetmpl}")
         else:
-            logger.info(
-                f"Number of files found matching {filetmpl}: {len(self.value)}"
-            )
+            logger.info(f"Number of files found matching {filetmpl}: {len(self.value)}")
         self.writeData()
 
 
@@ -267,6 +267,57 @@ class ExtractColumn(BarrierAppDROP):
     def run(self):
         self.readData()
         self.writeData()
+
+
+class LocalFileAdapter(requests.adapters.BaseAdapter):
+    """Helper protocol Adapter to allow Requests to GET file:// URLs"""
+
+    @staticmethod
+    def _chkpath(method, path):
+        """Return an HTTP status for the given filesystem path."""
+        if method.lower() in ("put", "delete"):
+            return 501, "Not Implemented"  # TODO
+        elif method.lower() not in ("get", "head"):
+            return 405, "Method Not Allowed"
+        elif os.path.isdir(path):
+            return 400, "Path Not A File"
+        elif not os.path.isfile(path):
+            return 404, "File Not Found"
+        elif not os.access(path, os.R_OK):
+            return 403, "Access Denied"
+        else:
+            return 200, "OK"
+
+    def send(self, req, **kwargs):  # pylint: disable=unused-argument
+        """Return the file specified by the given request
+
+        @type req: C{PreparedRequest}
+        @todo: Should I bother filling `response.headers` and processing
+               If-Modified-Since and friends using `os.stat`?
+        """
+        path = os.path.normcase(os.path.normpath(url2pathname(req.path_url)))
+        response = requests.Response()
+
+        response.status_code, response.reason = self._chkpath(req.method, path)
+        if response.status_code == 200 and req.method.lower() != "head":
+            try:
+                response.raw = open(path, "rb")
+            except (OSError, IOError) as err:
+                response.status_code = 500
+                response.reason = str(err)
+
+        if isinstance(req.url, bytes):
+            response.url = req.url.decode("utf-8")
+        else:
+            response.url = req.url
+
+        response.request = req
+        response.connection = self
+
+        return response
+
+    def close(self):
+        pass
 
 
 ##
@@ -342,9 +393,12 @@ class AdvUrlRetrieve(BarrierAppDROP):
             urlParts.update({name: part})
         self.urlParts = urlParts
         self.url = self.constructUrl()
+        requests_session = requests.session()
+        if "file://" == self.url[:7]:
+            requests_session.mount("file://", LocalFileAdapter())
         logger.info("Reading from %s", self.url)
         try:
-            u = requests.get(self.url)
+            u = requests_session.get(self.url)
         except Exception as e:
             raise e
         # finally read the content of the URL
@@ -368,9 +422,7 @@ class AdvUrlRetrieve(BarrierAppDROP):
                 logger.warning(f"Output with name {output.name} ignored!")
 
         if not written:
-            raise TypeError(
-                "No matching output drop found." + "Nothing written"
-            )
+            raise TypeError("No matching output drop found." + "Nothing written")
 
     def run(self):
         self.readData()
@@ -413,9 +465,7 @@ class String2JSON(BarrierAppDROP):
             output.write(d)
 
     def run(self):
-        if (
-            len(self.inputs) == 0
-        ):  # if there is no input use the argument value
+        if len(self.inputs) == 0:  # if there is no input use the argument value
             try:
                 logger.debug("Input found: %s", self.string)
                 data = json.loads(self.string)

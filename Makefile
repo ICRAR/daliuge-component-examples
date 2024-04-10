@@ -39,14 +39,14 @@ dlginstall:	  ## Install into $DLG_ROOT/code
 .PHONY: fmt
 fmt:              ## Format code using black & isort.
 	$(ENV_PREFIX)isort dlg_example_cmpts/
-	$(ENV_PREFIX)black -l 79 dlg_example_cmpts/
-	$(ENV_PREFIX)black -l 79 tests/
+	$(ENV_PREFIX)black -l 90 dlg_example_cmpts/
+	$(ENV_PREFIX)black -l 90 tests/
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)flake8 dlg_example_cmpts/
-	$(ENV_PREFIX)black -l 79 --check dlg_example_cmpts/
-	$(ENV_PREFIX)black -l 79 --check tests/
+	$(ENV_PREFIX)flake8 -l 90 dlg_example_cmpts/
+	$(ENV_PREFIX)black -l 90 --check dlg_example_cmpts/
+	$(ENV_PREFIX)black -l 90 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports dlg_example_cmpts/
 
 .PHONY: test

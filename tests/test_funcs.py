@@ -1,8 +1,6 @@
 import pytest, unittest
 import os
 import pickle
-import urllib
-import http
 
 from glob import glob
 from dlg import droputils
