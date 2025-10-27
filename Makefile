@@ -44,7 +44,7 @@ fmt:              ## Format code using black & isort.
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)flake8 -l 90 dlg_example_cmpts/
+	$(ENV_PREFIX)flake8 dlg_example_cmpts/
 	$(ENV_PREFIX)black -l 90 --check dlg_example_cmpts/
 	$(ENV_PREFIX)black -l 90 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports dlg_example_cmpts/

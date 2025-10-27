@@ -1,4 +1,5 @@
 """Python setup.py for dlg_example_cmpts package"""
+
 import io
 import os
 from setuptools import find_packages, setup
@@ -37,7 +38,9 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="andreas.wicenec@icrar.org",
-    packages=find_packages(exclude=["tests", ".github"]),
+    packages=find_packages(
+        include=["dlg_example_cmpts", "dlg_example_funcs"], exclude=["tests", ".github"]
+    ),
     install_requires=read_requirements("requirements.txt"),
     extras_require={"test": read_requirements("requirements-test.txt")},
 )

@@ -94,6 +94,7 @@ class MyBranch(BranchAppDrop):
             self.ind = 1
             result = False
         self.writeData()
+        print(f"MyBranch app returning: {result}")
         return result
 
 

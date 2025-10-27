@@ -1,6 +1,7 @@
 __package__ = "dlg_example_cmpts"
 # The following imports are the binding to the DALiuGE system
 # extend the following as required
+
 from .apps import (
     AdvUrlRetrieve,
     ExtractColumn,
@@ -10,6 +11,7 @@ from .apps import (
     MyBranch,
     String2JSON,
 )
+
 from .data import MyDataDROP
 
 __all__ = [

@@ -29,9 +29,9 @@ from dlg_example_cmpts import (
 )
 
 try:
-    from dlg.data.drops import InMemoryDROP, NullDROP
+    from dlg.data.drops import InMemoryDROP, NullDROP, FileDROP
 except ImportError:
-    from dlg.drop import InMemoryDROP, NullDROP
+    from dlg.drop import InMemoryDROP, NullDROP, FileDROP
 
 logger = logging.Logger(__name__)
 
@@ -331,7 +331,7 @@ class TestMyApps(unittest.TestCase):
         a.name = "partUrl"
         e = AdvUrlRetrieve("e", "e")
         e.urlTempl = testUrl
-        o = InMemoryDROP("o", "o")
+        o = FileDROP("o", "o")
         o.name = "content"
 
         e.addInput(a)
@@ -358,7 +358,7 @@ class TestMyApps(unittest.TestCase):
 
         e.addInput(a)
         e.addOutput(o)
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
+        with droputils.DROPWaiterCtx(self, o, timeout=2):
             a.setCompleted()
         self.assertRaises(requests.exceptions.RequestException)
 
@@ -379,7 +379,7 @@ class TestMyApps(unittest.TestCase):
 
         e.addInput(a)
         e.addOutput(o)
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
+        with droputils.DROPWaiterCtx(self, o, timeout=2):
             a.setCompleted()
         # content = json.loads(pickle.loads(droputils.allDropContents(o)))
         # self.assertEqual(content["args"], testContent["args"])
@@ -390,15 +390,13 @@ class TestMyApps(unittest.TestCase):
         Testing AdvUrlRetrieve without output
         """
         testContent = {"args": {"daliuge": "great"}}
-        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testUrl = "https://www.google.com"
         testPart = "great"
         a = InMemoryDROP("a", "a")
         a.write(pickle.dumps(testPart))
         a.name = "partUrl"
         e = AdvUrlRetrieve("e", "e")
         e.urlTempl = testUrl
-        # o = InMemoryDROP("o", "o")
-        # o.name = "content"
 
         e.addInput(a)
         # e.addOutput(o)
@@ -414,7 +412,7 @@ class TestMyApps(unittest.TestCase):
         Testing AdvUrlRetrieve with malicious type
         """
         testContent = {"args": {"daliuge": "great"}}
-        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testUrl = "https://www.google.com"
         testPart = b"0123456"
         a = InMemoryDROP("a", "a")
         a.write(pickle.dumps(testPart))
@@ -426,7 +424,7 @@ class TestMyApps(unittest.TestCase):
 
         e.addInput(a)
         e.addOutput(o)
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
+        with droputils.DROPWaiterCtx(self, o, timeout=2):
             a.setCompleted()
         self.assertRaises(TypeError)
 
@@ -435,7 +433,7 @@ class TestMyApps(unittest.TestCase):
         Testing AdvUrlRetrieve with wrong output name
         """
         testContent = {"args": {"daliuge": "great"}}
-        testUrl = "https://httpbin.org/get?daliuge=%i0"
+        testUrl = "https://www.google.com"
         testPart = "great"
         a = InMemoryDROP("a", "a")
         a.write(pickle.dumps(testPart))
@@ -447,7 +445,7 @@ class TestMyApps(unittest.TestCase):
 
         e.addInput(a)
         e.addOutput(o)
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
+        with droputils.DROPWaiterCtx(self, o, timeout=2):
             a.setCompleted()
         self.assertRaises(TypeError)
 
@@ -466,7 +464,7 @@ class TestMyApps(unittest.TestCase):
         g.addInput(a)
         g.addInput(b)
         g.addOutput(o)
-        with droputils.DROPWaiterCtx(self, o, timeout=10):
+        with droputils.DROPWaiterCtx(self, o, timeout=2):
             a.setCompleted()
             b.setCompleted()
         content = content = droputils.allDropContents(o)
